@@ -6,10 +6,19 @@ export class Home extends React.Component {
     return (
       <div className={styles.main}>
         <div className={styles.header}>Text Compare</div>
-        <div className={styles.row}>
-          <input type='text' placeholder='Left' className={styles.column} />
-          <input type='text' placeholder='Right' className={styles.column} />
+
+        <div className={styles.diffInputs}>
+          <div className={styles.diffInput}>
+            <div className={styles.diffInputHeader}>Original Text</div>
+            <div role='textbox' contentEditable='true' aria-placeholder='Left' className={styles.diffInputOriginal} />
+          </div>
+          <div className={styles.diffInput}>
+            <div className={styles.diffInputHeader}>Changed Text</div>
+            <div role='textbox' contentEditable='true' aria-placeholder='Left' className={styles.diffInputChanged} />
+          </div>
         </div>
+        <button type='submit' className={styles.compareButton}>Compare</button>
+
       </div>
     )
   }

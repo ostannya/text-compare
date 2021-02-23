@@ -1,20 +1,63 @@
 .header {
     padding-top: 20px;
-    font-size: 24px;
-    text-align: center;
+    font-size: 18px;
+    margin-left: 5%;
 }
 
-.row {
+.diffInputs {
     display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
-.column {
+.diffInputHeader {
+    text-align: center;
+    border-bottom: 1px solid rgb(196, 207, 212);
+    padding: 15px 10px 10px;
+    position: sticky;
+    top: 0;
+    right: 0px;
+    width: 100%;
+}
+
+.diffInput {
     flex: 50%;
     height: 200px;
-    border-radius: 10px;
-    border: solid #F6F8FA;
-    border-width: 3px;
-    padding: 20px 20px 20px 20px;
-    margin: 20px 20px 20px 20px;
     overflow: scroll;
+    
+}
+
+.diffInputOriginal {
+    margin: 0;
+    height: 73.5%;
+    display: block;
+    padding: 4px 10px;
+    caret-color: black;
+    border-left: 1px solid rgb(196, 207, 212);
+    border-right: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+    overflow: scroll;
+    font-size: 12px;
+}
+
+[contenteditable="true"]:focus {
+    outline: none;
+}
+
+.diffInputChanged {
+    margin: 0;
+    height: 73.5%;
+    display: block;
+    padding: 4px 10px;
+    caret-color: black;
+    border-right: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+    overflow: scroll;
+}
+
+.compareButton {
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
