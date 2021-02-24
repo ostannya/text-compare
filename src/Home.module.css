@@ -8,53 +8,44 @@
     display: flex;
     margin-left: 5%;
     margin-right: 5%;
+    align-content: center;
 }
 
 .diffInputHeader {
     text-align: center;
-    border-bottom: 1px solid rgb(196, 207, 212);
-    padding: 15px 10px 10px;
+    /* border-bottom: 1px solid rgb(196, 207, 212); */
+    padding: 10px 10px 10px;
     position: sticky;
-    top: 0;
-    right: 0px;
-    width: 100%;
 }
 
 .diffInput {
-    flex: 50%;
     height: 200px;
-    overflow: scroll;
-    
+    width: 100%;
 }
 
-.diffInputOriginal {
-    margin: 0;
-    height: 73.5%;
-    display: block;
+.diffInputText {
     padding: 4px 10px;
+    width: 96%;
+    min-height: 50%;
     caret-color: black;
-    border-left: 1px solid rgb(196, 207, 212);
-    border-right: 1px solid rgb(196, 207, 212);
-    border-bottom: 1px solid rgb(196, 207, 212);
     overflow: scroll;
     font-size: 12px;
-}
-
-[contenteditable="true"]:focus {
+    border: 1px solid rgb(196, 207, 212);
+    resize: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     outline: none;
 }
 
-.diffInputChanged {
-    margin: 0;
-    height: 73.5%;
-    display: block;
+.diffInputText2 {
     padding: 4px 10px;
+    width: 94%;
+    min-height: 50%;
     caret-color: black;
-    border-right: 1px solid rgb(196, 207, 212);
-    border-bottom: 1px solid rgb(196, 207, 212);
     overflow: scroll;
+    font-size: 12px;
+    border: 1px solid rgb(196, 207, 212);
+    resize: none;
 }
-
 .compareButton {
     margin: 10px auto;
     display: flex;

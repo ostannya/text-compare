@@ -1,5 +1,20 @@
 import React from 'react'
 import styles from '../Home.module.css'
+import sanitizeHtml from 'sanitize-html'
+
+window.onload = function () {
+  const original = document.getElementById('originalInput')
+  const button = document.getElementById('button')
+  button.addEventListener('click', () => {
+    console.log('Clicked')
+    console.log(original.value)
+  })
+
+  const clean = sanitizeHtml(original, {
+    allowedTags: [],
+    allowedAttributes: {}
+  })
+}
 
 export class Home extends React.Component {
   render () {
@@ -10,14 +25,14 @@ export class Home extends React.Component {
         <div className={styles.diffInputs}>
           <div className={styles.diffInput}>
             <div className={styles.diffInputHeader}>Original Text</div>
-            <div role='textbox' contentEditable='true' aria-placeholder='Left' className={styles.diffInputOriginal} />
+            <textarea spellCheck='false' placeholder='Left' className={styles.diffInputText} id='originalInput' />
           </div>
           <div className={styles.diffInput}>
             <div className={styles.diffInputHeader}>Changed Text</div>
-            <div role='textbox' contentEditable='true' aria-placeholder='Left' className={styles.diffInputChanged} />
+            <textarea spellCheck='false' placeholder='Right' className={styles.diffInputText} />
           </div>
         </div>
-        <button type='submit' className={styles.compareButton}>Compare</button>
+        <button type='submit' className={styles.compareButton} id='button'>Compare</button>
 
       </div>
     )
