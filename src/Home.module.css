@@ -1,9 +1,14 @@
 @import '~antd/dist/antd.css';
 
+.main {
+    text-align: center;
+}
+
 .header {
     padding-top: 20px;
     font-size: 18px;
     margin-left: 5%;
+    text-align: left;
 }
 
 .diffInputs {
@@ -16,13 +21,12 @@
 
 .diffInputHeader {
     text-align: center;
-    /* border-bottom: 1px solid rgb(196, 207, 212); */
     padding: 10px 10px 10px 10px;
     position: sticky;
 }
 
 .diffInput {
-    height: 200px;
+    height: 300px;
     width: 100%;
 }
 
@@ -32,21 +36,105 @@
     min-height: 70%;
     caret-color: black;
     overflow: scroll;
-    font-size: 16px;
-    border: 1px solid rgb(196, 207, 212);
+    font-size: 14px;
     resize: none;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border: none;
     outline: none;
+    font-family: monospace;
+}
+
+.left {
+    border-left: 1px solid rgb(196, 207, 212);
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.right {
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
 }
 
 .compareButton {
     margin: 10px auto;
-    left: 45%;
+    display: inline-block;
+}
+h3 {
+    margin-left: 5%;
+}
+
+.diffOutputs {
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .output {
     font-size: 14px;
-    margin-left: 5%;
-    margin-right: 5%;
     margin-top: 20px;
+    text-align: left;
+    padding: 4px 10px;
+    width: 100%;
+    min-height: 70%;
+    overflow: scroll;
+    font-family: monospace;
+    height: 200px;
+    white-space: pre-line;
+}
+
+.outputLeft {
+    border-left: 1px solid rgb(196, 207, 212);
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.outputRight {
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.clearButton {
+    margin: 10px auto;
+    display: inline-block;
+}
+
+.diffStats {
+    display: flex;
+    margin-left: 5%;
+    padding-top: 20px;
+    font-size: 0.8125rem;
+}
+
+.minus {
+    background-color: #fff5f5;
+    color: #ff5249;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: 1em;
+    text-align: center;
+    margin: 2.5px 8px 0px 0px;
+    vertical-align: top;
+    padding: 0px 2px;
+}
+
+.plus {
+    background-color: #EBFAF5;
+    color: #29be8c;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: 1em;
+    text-align: center;
+    margin: 2.5px 8px 0px 10px;
+    vertical-align: top;
+}
+
+.dropDownMenuTools {
+    align-self: left;
 }
