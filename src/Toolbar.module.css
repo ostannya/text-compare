@@ -1,0 +1,45 @@
+.diffStats {
+    display: flex;
+    padding-top: 20px;
+    font-size: 0.8125rem;
+    float: right;
+    clear: right;
+    margin-right: 5%;
+    font-size: 14px;
+}
+
+.minus {
+    background-color: #fff5f5;
+    color: #ff5249;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: 1em;
+    text-align: center;
+    margin: 2.5px 8px 0px 0px;
+    vertical-align: top;
+    padding: 0px 2px;
+}
+
+.plus {
+    background-color: #EBFAF5;
+    color: #29be8c;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: 1em;
+    text-align: center;
+    margin: 2.5px 8px 0px 10px;
+    vertical-align: top;
+}
+
+.dropDownMenuTools {
+    float: right;
+    margin-right: 5%;
+}
+
+.toolbar {
+    clear: both;
+}

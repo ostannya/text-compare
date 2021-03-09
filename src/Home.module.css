@@ -1,14 +1,54 @@
 @import '~antd/dist/antd.css';
 
+@font-face {
+    font-family: 'proxima_novaregular';
+    src: url('fonts/proximanova-regular-webfont.woff2') format('woff2'),
+         url('fonts/proximanova-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'proxima_novabold';
+    src: url('fonts/proxima_nova_bold-webfont.woff2') format('woff2'),
+         url('fonts/proxima_nova_bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .main {
     text-align: center;
+    font-family: 'proxima_novaregular', Arial, Helvetica, sans-serif;
+    flex: 1;
 }
 
 .header {
+    display: flex;
     padding-top: 20px;
-    font-size: 18px;
     margin-left: 5%;
+}
+
+.headerText {
+    font-size: 20px;
     text-align: left;
+    font-family: 'proxima_novabold';
+}
+
+.logo {
+    height: 30px;
 }
 
 .diffInputs {
@@ -23,17 +63,18 @@
     text-align: center;
     padding: 10px 10px 10px 10px;
     position: sticky;
+    font-size: 16px;
 }
 
 .diffInput {
-    height: 300px;
+    height: 200px;
     width: 100%;
 }
 
 .diffInputText {
     padding: 4px 10px;
     width: 100%;
-    min-height: 70%;
+    min-height: 100%;
     caret-color: black;
     overflow: scroll;
     font-size: 14px;
@@ -58,16 +99,14 @@
 
 .compareButton {
     margin: 10px auto;
-    display: inline-block;
-}
-h3 {
-    margin-left: 5%;
+    bottom: -45px;
 }
 
 .diffOutputs {
     display: flex;
     margin-left: 5%;
     margin-right: 5%;
+    clear: both;
 }
 
 .output {
@@ -80,7 +119,7 @@ h3 {
     overflow: scroll;
     font-family: monospace;
     height: 200px;
-    white-space: pre-line;
+    white-space: pre-wrap;
 }
 
 .outputLeft {
@@ -99,42 +138,20 @@ h3 {
 .clearButton {
     margin: 10px auto;
     display: inline-block;
+    clear: both;
 }
 
-.diffStats {
-    display: flex;
-    margin-left: 5%;
-    padding-top: 20px;
-    font-size: 0.8125rem;
-}
-
-.minus {
-    background-color: #fff5f5;
-    color: #ff5249;
-    width: 0.875rem;
-    height: 0.875rem;
-    border-radius: 4px;
+.swapButton {
+    margin: 10px auto;
     display: inline-block;
-    line-height: 1em;
-    text-align: center;
-    margin: 2.5px 8px 0px 0px;
-    vertical-align: top;
-    padding: 0px 2px;
+    clear: both;
+    font-size: 18px;
+    padding-left: 10px;
 }
 
-.plus {
-    background-color: #EBFAF5;
-    color: #29be8c;
-    width: 0.875rem;
-    height: 0.875rem;
-    border-radius: 4px;
-    display: inline-block;
-    line-height: 1em;
+.footer {
+    width: 80%;
+    margin-left: 10%; 
+    margin-bottom: 2%;
     text-align: center;
-    margin: 2.5px 8px 0px 10px;
-    vertical-align: top;
-}
-
-.dropDownMenuTools {
-    align-self: left;
 }
