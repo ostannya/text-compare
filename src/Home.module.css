@@ -1,20 +1,157 @@
+@import '~antd/dist/antd.css';
+
+@font-face {
+    font-family: 'proxima_novaregular';
+    src: url('fonts/proximanova-regular-webfont.woff2') format('woff2'),
+         url('fonts/proximanova-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'proxima_novabold';
+    src: url('fonts/proxima_nova_bold-webfont.woff2') format('woff2'),
+         url('fonts/proxima_nova_bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main {
+    text-align: center;
+    font-family: 'proxima_novaregular', Arial, Helvetica, sans-serif;
+    flex: 1;
+}
+
 .header {
+    display: flex;
     padding-top: 20px;
-    font-size: 24px;
+    margin-left: 5%;
+}
+
+.headerText {
+    font-size: 20px;
+    text-align: left;
+    font-family: 'proxima_novabold';
+}
+
+.logo {
+    height: 30px;
+}
+
+.diffInputs {
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    align-content: center;
     text-align: center;
 }
 
-.row {
-    display: flex;
+.diffInputHeader {
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+    position: sticky;
+    font-size: 16px;
 }
 
-.column {
-    flex: 50%;
+.diffInput {
     height: 200px;
-    border-radius: 10px;
-    border: solid #F6F8FA;
-    border-width: 3px;
-    padding: 20px 20px 20px 20px;
-    margin: 20px 20px 20px 20px;
+    width: 100%;
+}
+
+.diffInputText {
+    padding: 4px 10px;
+    width: 100%;
+    min-height: 100%;
+    caret-color: black;
     overflow: scroll;
+    font-size: 14px;
+    resize: none;
+    border: none;
+    outline: none;
+    font-family: monospace;
+}
+
+.left {
+    border-left: 1px solid rgb(196, 207, 212);
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.right {
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.compareButton {
+    margin: 10px auto;
+    bottom: -45px;
+}
+
+.diffOutputs {
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    clear: both;
+}
+
+.output {
+    font-size: 14px;
+    margin-top: 20px;
+    text-align: left;
+    padding: 4px 10px;
+    width: 100%;
+    min-height: 70%;
+    overflow: scroll;
+    font-family: monospace;
+    height: 200px;
+    white-space: pre-wrap;
+}
+
+.outputLeft {
+    border-left: 1px solid rgb(196, 207, 212);
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.outputRight {
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.clearButton {
+    margin: 10px auto;
+    display: inline-block;
+    clear: both;
+}
+
+.swapButton {
+    margin: 10px auto;
+    display: inline-block;
+    clear: both;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+.footer {
+    width: 80%;
+    margin-left: 10%; 
+    margin-bottom: 2%;
+    text-align: center;
 }
