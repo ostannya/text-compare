@@ -153,5 +153,14 @@ html, body {
     width: 80%;
     margin-left: 10%; 
     margin-bottom: 2%;
-    text-align: center;
+    display: flex;
+}
+
+.githubButton {
+    margin-top: 13px;
+}
+
+.footerText {
+    text-align: left;
+    margin-left: 20px;
 }
