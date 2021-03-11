@@ -4,6 +4,7 @@ import { Button, Tooltip } from 'antd'
 import { SwapOutlined } from '@ant-design/icons'
 import Toolbar from './Toolbar'
 import logo from '../assets/logo.png'
+import GitHubButton from 'react-github-btn'
 
 function removeWhitespaces (text) {
   const result = text.replace(/\s{2,}/g, ' ').trim()
@@ -40,7 +41,6 @@ export class Home extends React.Component {
     const original = this.original.current.value
     const changed = this.changed.current.value
     const diff = Diff.diffChars(original, changed)
-    console.log(diff)
     if (original === changed) {
       this.setState({ identical: true })
     } else {
@@ -49,7 +49,6 @@ export class Home extends React.Component {
   }
 
   handleClear () {
-    console.log(this.original.current.value)
     this.original.current.value = ''
     this.changed.current.value = ''
     this.setState({ result: false, identical: false })
@@ -92,17 +91,23 @@ export class Home extends React.Component {
   render () {
     // line break doesn't show, if ? object.value === '\n'
     const { diff, result, identical } = this.state
-    const partRemoved = diff.filter(object => !(object.added === true)).map((object, index) =>
-      <span
-        style={{ backgroundColor: object.removed ? '#FF5249' : 'transparent' }} key={index}
-      >{object.value}
-      </span>)
-    const partAdded = diff.filter(object => !(object.removed === true)).map((object, index) =>
-      <span
-        style={{ backgroundColor: (object.added ? '#29BE8C' : 'transparent') }}
-        key={index}
-      >{object.value}
-      </span>)
+    const partsRemoved = diff.filter(object => !(object.added === true)).map(function (object, index, partsRemoved) {
+      const objectNextRemoved = partsRemoved[index + 1]
+      // console.log('partsRemoved 1 value: ', partsRemoved[index + 1].value)
+      if (objectNextRemoved && objectNextRemoved.removed && objectNextRemoved.value === '\n') {
+        return <span style={{ backgroundColor: '#ffc4c1' }} key={index}>{object.value}</span>
+      } else {
+        return <span style={{ backgroundColor: object.removed ? '#ffc4c1' : 'transparent' }} key={index}>{object.value}</span>
+      }
+    })
+    const partsAdded = diff.filter(object => !(object.removed === true)).map(function (object, index, partsAdded) {
+      const objectNextAdded = partsAdded[index + 1]
+      if (objectNextAdded && objectNextAdded.added && objectNextAdded.value === '\n') {
+        return <span style={{ backgroundColor: '#77E2BD' }} key={index}>{object.value}</span>
+      } else {
+        return <span style={{ backgroundColor: object.added ? '#77E2BD' : 'transparent' }} key={index}>{object.value}</span>
+      }
+    })
     return (
       <div className={styles.container}>
         <div className={styles.main}>
@@ -120,8 +125,8 @@ export class Home extends React.Component {
                   onBreakstoSpaces={this.handleBreakstoSpaces.bind()} onRemoveWhitespaces={this.handleRemoveWhitespaces.bind()}
                 />
                 <div className={styles.diffOutputs}>
-                  <div spellCheck='false' className={`${styles.output} ${styles.outputLeft}`}>{partRemoved}</div>
-                  <div spellCheck='false' className={`${styles.output} ${styles.outputRight}`}>{partAdded}</div>
+                  <div spellCheck='false' className={`${styles.output} ${styles.outputLeft}`}>{partsRemoved}</div>
+                  <div spellCheck='false' className={`${styles.output} ${styles.outputRight}`}>{partsAdded}</div>
                 </div>
                 <div className={styles.outputButtons}>
                   <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
@@ -144,7 +149,12 @@ export class Home extends React.Component {
           <Button type='primary' className={styles.compareButton} onClick={this.handleCompare}>Compare</Button>
           <div className={styles.push} />
         </div>
-        <div className={styles.footer}>2Text Compare is a an open source side-by-side text comparison tool. It doesn’t store any data neither use analytics to track users. Created using ⚛️ React and <a href='https://github.com/kpdecker/jsdiff'>jsdiff</a> library.</div>
+        <div className={styles.footer}>
+          <div className={styles.githubButton}>
+            <GitHubButton href='https://github.com/ostannya/text-compare' aria-label='Star ostannya/text-compare on GitHub'>Star on GitHub</GitHubButton>
+          </div>
+          <div className={styles.footerText}>2Text Compare is a an open source side-by-side text comparison tool. It doesn’t store any data neither use analytics to track users. Created using ⚛️ React and <a href='https://github.com/kpdecker/jsdiff'>jsdiff</a> library.</div>
+        </div>
       </div>
     )
   }
