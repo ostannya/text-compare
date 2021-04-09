@@ -16,9 +16,38 @@ function replaceBreaks (text) {
   return result
 }
 
+const lineBreakedDiff = (partsDiff) => {
+  const lines = []
+  let line = []
+  for (let i = 0; i < partsDiff.length; i++) {
+    if (partsDiff[i].value.match('\n')) {
+      const valueArray = partsDiff[i].value.split('\n')
+      for (let j = 0; j < valueArray.length - 1; j++) {
+        line.push({
+          ...partsDiff[i],
+          value: valueArray[j]
+        })
+        lines.push(line)
+        line = []
+      }
+      line.push({
+        ...partsDiff[i],
+        value: valueArray[valueArray.length - 1]
+      })
+    } else {
+      line.push(partsDiff[i])
+    }
+  }
+  if (line.length) {
+    lines.push(line)
+  }
+  return lines
+}
+
 export class Home extends React.Component {
   constructor (props) {
     super(props)
+    this.handleChange = this.handleChange.bind(this)
     this.handleCompare = this.handleCompare.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.handleMenuClick = this.handleMenuClick.bind(this)
@@ -32,8 +61,14 @@ export class Home extends React.Component {
       diff: [],
       result: false,
       identical: false,
-      swapped: false
+      swapped: false,
+      original: '',
+      changed: ''
     }
+  }
+
+  handleChange () {
+    this.setState({ original: this.original.current.value, changed: this.changed.current.value })
   }
 
   handleCompare () {
@@ -42,16 +77,16 @@ export class Home extends React.Component {
     const changed = this.changed.current.value
     const diff = Diff.diffChars(original, changed)
     if (original === changed) {
-      this.setState({ identical: true })
+      this.setState({ identical: true, result: false })
     } else {
-      this.setState({ diff: diff, result: true })
+      this.setState({ diff: diff, result: true, identical: false })
     }
   }
 
   handleClear () {
     this.original.current.value = ''
     this.changed.current.value = ''
-    this.setState({ result: false, identical: false })
+    this.setState({ result: false, identical: false, original: this.original.current.value, changed: this.changed.current.value })
   }
 
   handleMenuClick () {
@@ -89,24 +124,44 @@ export class Home extends React.Component {
   }
 
   render () {
-    // line break doesn't show, if ? object.value === '\n'
-    const { diff, result, identical } = this.state
-    const partsRemoved = diff.filter(object => !(object.added === true)).map(function (object, index, partsRemoved) {
-      const objectNextRemoved = partsRemoved[index + 1]
-      // console.log('partsRemoved 1 value: ', partsRemoved[index + 1].value)
-      if (objectNextRemoved && objectNextRemoved.removed && objectNextRemoved.value === '\n') {
-        return <span style={{ backgroundColor: '#ffc4c1' }} key={index}>{object.value}</span>
-      } else {
-        return <span style={{ backgroundColor: object.removed ? '#ffc4c1' : 'transparent' }} key={index}>{object.value}</span>
-      }
+    const { diff, result, identical, original, changed } = this.state
+    const partsRemoved = lineBreakedDiff(diff.filter(object => !(object.added === true)))
+      .map(function (line, index) {
+        return (
+          <div className={styles.numberedLineLeft} key={index}>
+            {line.map(function (object, index, partsRemoved) {
+              const objectNextRemoved = partsRemoved[index + 1]
+              if (objectNextRemoved && objectNextRemoved.removed && objectNextRemoved.value === '\n') {
+                return <span style={{ backgroundColor: '#ffc4c1' }} key={index}>{object.value}</span>
+              } else {
+                return <span style={{ backgroundColor: object.removed ? '#ffc4c1' : 'transparent' }} key={index}>{object.value}</span>
+              }
+            })}
+          </div>
+        )
+      })
+    const partsAdded = lineBreakedDiff(diff.filter(object => !(object.removed === true)))
+      .map(function (line, index) {
+        return (
+          <div className={styles.numberedLineRight} key={index}>
+            {line.map(function (object, index, partsAdded) {
+              const objectNextAdded = partsAdded[index + 1]
+              if (objectNextAdded && objectNextAdded.added && objectNextAdded.value === '\n') {
+                return <span style={{ backgroundColor: '#b5efdb' }} key={index}>{object.value}</span>
+              } else {
+                return <span style={{ backgroundColor: object.added ? '#b5efdb' : 'transparent' }} key={index}>{object.value}</span>
+              }
+            })}
+          </div>
+        )
+      })
+    const originalLine = original.split('\n').map(function (inputLine, index) {
+      return (
+        <div className={styles.numberedOriginal} key={index}>{inputLine}</div>)
     })
-    const partsAdded = diff.filter(object => !(object.removed === true)).map(function (object, index, partsAdded) {
-      const objectNextAdded = partsAdded[index + 1]
-      if (objectNextAdded && objectNextAdded.added && objectNextAdded.value === '\n') {
-        return <span style={{ backgroundColor: '#77E2BD' }} key={index}>{object.value}</span>
-      } else {
-        return <span style={{ backgroundColor: object.added ? '#77E2BD' : 'transparent' }} key={index}>{object.value}</span>
-      }
+    const changedLine = changed.split('\n').map(function (inputLine, index) {
+      return (
+        <div className={styles.numberedChanged} key={index}>{inputLine}</div>)
     })
     return (
       <div className={styles.container}>
@@ -136,14 +191,16 @@ export class Home extends React.Component {
                 </div>
               </div>
             )}
-          <div className={styles.diffInputs}>
+          <div className={`${styles.diffInputs} ${styles.numberedInputs}`}>
             <div className={styles.diffInput}>
               <div className={styles.diffInputHeader}>Original Text</div>
-              <textarea spellCheck='false' className={`${styles.diffInputText} ${styles.left}`} ref={this.original} defaultValue='aaaa aaaa' />
+              <div className={styles.linesContainer}>{originalLine}</div>
+              <textarea spellCheck='false' className={`${styles.diffInputText} ${styles.left}`} onChange={this.handleChange.bind()} ref={this.original} />
             </div>
             <div className={styles.diffInput}>
               <div className={styles.diffInputHeader}>Changed Text</div>
-              <textarea spellCheck='false' className={`${styles.diffInputText} ${styles.right}`} ref={this.changed} defaultValue='aa aaaaa aaa' />
+              <div className={styles.linesContainer}>{changedLine}</div>
+              <textarea spellCheck='false' className={`${styles.diffInputText} ${styles.right}`} onChange={this.handleChange.bind()} ref={this.changed} />
             </div>
           </div>
           <Button type='primary' className={styles.compareButton} onClick={this.handleCompare}>Compare</Button>

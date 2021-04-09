@@ -18,9 +18,12 @@
 
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 html, body {
     height: 100%;
     margin: 0;
+    counter-reset: counterLeft counterRight counterOriginal counterChanged;
   }
 
 .container {
@@ -59,6 +62,13 @@ html, body {
     text-align: center;
 }
 
+.numberedInputs {
+    margin-left: 5%;
+    margin-right: 5%;
+    align-content: center;
+    text-align: center;
+}
+
 .diffInputHeader {
     text-align: center;
     padding: 10px 10px 10px 10px;
@@ -69,10 +79,12 @@ html, body {
 .diffInput {
     height: 200px;
     width: 100%;
+    position: relative;
 }
 
 .diffInputText {
     padding: 4px 10px;
+    padding-left: 30px;
     width: 100%;
     min-height: 100%;
     caret-color: black;
@@ -81,7 +93,7 @@ html, body {
     resize: none;
     border: none;
     outline: none;
-    font-family: monospace;
+    font-family: monospace, 'Roboto Mono';
 }
 
 .left {
@@ -117,7 +129,7 @@ html, body {
     width: 100%;
     min-height: 70%;
     overflow: scroll;
-    font-family: monospace;
+    font-family: monospace, 'Roboto Mono';
     height: 200px;
     white-space: pre-wrap;
 }
@@ -133,6 +145,100 @@ html, body {
     border-right: 1px solid rgb(196, 207, 212);
     border-top: 1px solid rgb(196, 207, 212);
     border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.linesContainer {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5px;
+    padding-right: 10px;
+    overflow: scroll;
+    width: 100%;
+    opacity: 0.5;
+}
+
+.numberedLineLeft {
+    position: relative;
+    padding-left: 20px;
+}
+
+.numberedLineLeft::before {
+    position: absolute;
+    left: 0;
+    counter-increment: counterLeft;                
+    content: counter(counterLeft) " ";
+    color: rgb(196, 207, 212);
+    display: block;
+    padding: 0 10px 10px 0;
+}
+
+.numberedLineRight{
+    padding-left: 20px;
+    position: relative;
+}
+
+.numberedOriginal {
+    position: relative;
+    display: block;
+    color: blue;
+    text-align: left;
+    padding-left: 30px;
+    font-family: monospace, 'Roboto Mono';
+    width: 100%;
+    min-height: 100%;
+    overflow: scroll;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+.numberedOriginal::before {
+    counter-increment: counterOriginal;
+    content: counter(counterOriginal) " ";
+    color: rgb(196, 207, 212);
+    position: absolute;
+    left: 0;
+    display: block;
+    padding: 0 10px 10px 0;
+    overflow: scroll;
+    margin-left: 10px;
+}
+
+.numberedChanged::before {
+    counter-increment: counterChanged;
+    content: counter(counterChanged) " ";
+    color: rgb(196, 207, 212);
+    position: absolute;
+    left: 0;
+    display: block;
+    padding: 0 10px 10px 0;
+    overflow: scroll;
+    margin-left: 10px;
+}
+
+.numberedLineRight::before {
+    counter-increment: counterRight;                
+    content: counter(counterRight) " ";
+    display: block;
+    color: rgb(196, 207, 212);
+    position: absolute;
+    left: 0;
+}
+
+.numberedChanged {
+    position: relative;
+    display: block;
+    color: red;
+    text-align: left;
+    padding-left: 30px;
+    font-family: monospace, 'Roboto Mono';
+    width: 100%;
+    min-height: 100%;
+    overflow: scroll;
+    font-size: 14px;
+    white-space: pre-line;
 }
 
 .clearButton {
