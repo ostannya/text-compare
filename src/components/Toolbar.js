@@ -17,8 +17,8 @@ export class Toolbar extends React.Component {
       <div className={styles.toolbar}>
         <Dropdown.Button className={styles.dropDownMenuTools} overlay={tools}>Tools</Dropdown.Button>
         <div className={styles.diffStats}>
-          <div className={styles.minus}>–</div><div>{statRemovals} removal(s)</div>
-          <div className={styles.plus}>+</div><div>{statAdditions} addition(s)</div>
+          <div className={styles.minus}>–</div><div>{statRemovals} {statRemovals === 1 ? 'removal' : 'removals'}</div>
+          <div className={styles.plus}>+</div><div>{statAdditions} {statAdditions === 1 ? 'addition' : 'additions'}</div>
         </div>
       </div>)
   }

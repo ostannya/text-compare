@@ -83,30 +83,49 @@ html, body {
 }
 
 .diffInputText {
-    padding: 4px 10px;
-    padding-left: 30px;
-    width: 100%;
-    min-height: 100%;
+    padding: 5px 10px;
+    padding-left: 0px;
     caret-color: black;
-    overflow: scroll;
     font-size: 14px;
     resize: none;
     border: none;
     outline: none;
     font-family: monospace, 'Roboto Mono';
+    position: absolute;
+    left: 30px;
+    width: calc(100% - 30px);
+    overflow: hidden;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 
-.left {
+
+.inputScrollOriginal {
     border-left: 1px solid rgb(196, 207, 212);
     border-right: 1px solid rgb(196, 207, 212);
     border-top: 1px solid rgb(196, 207, 212);
     border-bottom: 1px solid rgb(196, 207, 212);
+    height: 200px;
+    overflow-y: auto;
 }
 
-.right {
+.inputScrollChanged {
     border-right: 1px solid rgb(196, 207, 212);
     border-top: 1px solid rgb(196, 207, 212);
     border-bottom: 1px solid rgb(196, 207, 212);
+    height: 200px;
+    overflow-y: auto;
+}
+
+.innerScrollOriginal {
+    position: relative;
+    min-height: 200px;
+}
+
+.innerScrollChanged {
+    position: relative;
+    min-height: 200px;
 }
 
 .compareButton {
@@ -148,21 +167,17 @@ html, body {
 }
 
 .linesContainer {
-    position: absolute;
     pointer-events: none;
     user-select: none;
-    display: flex;
-    flex-direction: column;
     padding-top: 5px;
-    padding-right: 10px;
-    overflow: scroll;
-    width: 100%;
+    padding-right: 4px;
     opacity: 0.5;
 }
 
 .numberedLineLeft {
     position: relative;
     padding-left: 20px;
+    min-height: 22px;
 }
 
 .numberedLineLeft::before {
@@ -173,11 +188,13 @@ html, body {
     color: rgb(196, 207, 212);
     display: block;
     padding: 0 10px 10px 0;
+    white-space: nowrap;
 }
 
 .numberedLineRight{
     padding-left: 20px;
     position: relative;
+    min-height: 22px;
 }
 
 .numberedOriginal {
@@ -191,7 +208,8 @@ html, body {
     min-height: 100%;
     overflow: scroll;
     font-size: 14px;
-    white-space: pre-wrap;
+    padding-right: 10px;
+    min-height: 22px;
 }
 
 .numberedOriginal::before {
@@ -204,6 +222,7 @@ html, body {
     padding: 0 10px 10px 0;
     overflow: scroll;
     margin-left: 10px;
+    
 }
 
 .numberedChanged::before {
@@ -238,7 +257,8 @@ html, body {
     min-height: 100%;
     overflow: scroll;
     font-size: 14px;
-    white-space: pre-line;
+    padding-right: 10px;
+    min-height: 22px;
 }
 
 .clearButton {

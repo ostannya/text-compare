@@ -194,13 +194,21 @@ export class Home extends React.Component {
           <div className={`${styles.diffInputs} ${styles.numberedInputs}`}>
             <div className={styles.diffInput}>
               <div className={styles.diffInputHeader}>Original Text</div>
-              <div className={styles.linesContainer}>{originalLine}</div>
-              <textarea spellCheck='false' className={`${styles.diffInputText} ${styles.left}`} onChange={this.handleChange.bind()} ref={this.original} />
+              <div className={styles.inputScrollOriginal}>
+                <div className={styles.innerScrollOriginal}>
+                  <div className={styles.linesContainer}>{originalLine}</div>
+                  <textarea spellCheck='false' className={`${styles.diffInputText} ${styles.left}`} onChange={this.handleChange.bind()} ref={this.original} />
+                </div>
+              </div>
             </div>
             <div className={styles.diffInput}>
               <div className={styles.diffInputHeader}>Changed Text</div>
-              <div className={styles.linesContainer}>{changedLine}</div>
-              <textarea spellCheck='false' className={`${styles.diffInputText} ${styles.right}`} onChange={this.handleChange.bind()} ref={this.changed} />
+              <div className={styles.inputScrollChanged}>
+                <div className={styles.innerScrollChanged}>
+                  <div className={styles.linesContainer}>{changedLine}</div>
+                  <textarea spellCheck='false' className={`${styles.diffInputText} ${styles.right}`} onChange={this.handleChange.bind()} ref={this.changed} />
+                </div>
+              </div>
             </div>
           </div>
           <Button type='primary' className={styles.compareButton} onClick={this.handleCompare}>Compare</Button>
