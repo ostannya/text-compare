@@ -131,6 +131,7 @@ html, body {
 .compareButton {
     margin: 10px auto;
     bottom: -45px;
+    z-index: 4;
 }
 
 .diffOutputs {
@@ -276,17 +277,24 @@ html, body {
 }
 
 .footer {
+    clear: both;
     width: 80%;
     margin-left: 10%; 
     margin-bottom: 2%;
     display: flex;
+    justify-content: center;
+    margin-top: 40px;
 }
 
 .githubButton {
     margin-top: 13px;
+    align-self: center;
 }
 
 .footerText {
     text-align: left;
     margin-left: 20px;
+    font-size: 14px;
+    font-family: 'proxima_novaregular', Arial, Helvetica, sans-serif;
+    margin-top: 13px;
 }

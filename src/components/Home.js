@@ -218,7 +218,7 @@ export class Home extends React.Component {
           <div className={styles.githubButton}>
             <GitHubButton href='https://github.com/ostannya/text-compare' aria-label='Star ostannya/text-compare on GitHub'>Star on GitHub</GitHubButton>
           </div>
-          <div className={styles.footerText}>2Text Compare is a an open source side-by-side text comparison tool. It doesn’t store any data neither use analytics to track users. Created using ⚛️ React and <a href='https://github.com/kpdecker/jsdiff'>jsdiff</a> library.</div>
+          <div className={styles.footerText}>2Text Compare is a an open source side-by-side text comparison tool. Created using ⚛️ React and <a href='https://github.com/kpdecker/jsdiff'>jsdiff</a> library.</div>
         </div>
       </div>
     )
