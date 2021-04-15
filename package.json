@@ -1,7 +1,7 @@
 {
   "name": "text-compare",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "https://ostannya.github.io/text-compare/",
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
