@@ -114,8 +114,10 @@ export class Home extends React.Component {
             <div className={styles.headerText}>2Text Compare</div>
           </div>
           {identical
-            ? <div>The two texts are identical!</div> : null}
-          {!result ? null
+            ? <div>The two texts are identical!</div>
+            : null}
+          {!result
+            ? null
             : (
               <div>
                 <Toolbar

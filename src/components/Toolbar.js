@@ -20,7 +20,8 @@ export class Toolbar extends React.Component {
           <div className={styles.minus}>–</div><div>{statRemovals} {statRemovals === 1 ? 'removal' : 'removals'}</div>
           <div className={styles.plus}>+</div><div>{statAdditions} {statAdditions === 1 ? 'addition' : 'additions'}</div>
         </div>
-      </div>)
+      </div>
+    )
   }
 }
 

@@ -33,6 +33,12 @@
       "react-app/jest"
     ]
   },
+  "standard": {
+    "ignore": [
+      "src/App.test.js",
+      "src/serviceWorker.js"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
