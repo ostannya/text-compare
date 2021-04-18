@@ -1,0 +1,36 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches:
+      - main
+env:
+    IS_PULL_REQUEST: ${{ github.base_ref != '' }}
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Install
+        run: |
+          npm install
+      - name: Lint and Test
+        run: |
+          npm run lint
+          npm run test
+      - name: Build
+        run: |
+          npm run build
+          ls ./build
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
+        if: env.IS_PULL_REQUEST == 'false'
