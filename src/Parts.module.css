@@ -1,0 +1,64 @@
+.numberedOriginal {
+    position: relative;
+    padding-left: 20px;
+    min-height: 22px;
+}
+
+.numberedOriginal::before {
+    position: absolute;
+    left: 0;
+    counter-increment: counterLeft;                
+    content: counter(counterLeft) " ";
+    color: rgb(196, 207, 212);
+    display: block;
+    padding: 0 10px 10px 0;
+    white-space: nowrap;
+}
+
+.numberedChanged{
+    padding-left: 20px;
+    position: relative;
+    min-height: 22px;
+}
+
+.numberedChanged::before {
+    counter-increment: counterRight;                
+    content: counter(counterRight) " ";
+    display: block;
+    color: rgb(196, 207, 212);
+    position: absolute;
+    left: 0;
+}
+
+.outputs {
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    clear: both;
+}
+
+.output {
+    font-size: 14px;
+    margin-top: 20px;
+    text-align: left;
+    padding: 4px 10px;
+    width: 100%;
+    min-height: 70%;
+    overflow: scroll;
+    font-family: monospace, 'Roboto Mono';
+    height: 200px;
+    white-space: pre-wrap;
+}
+
+.outputOriginal {
+    border-left: 1px solid rgb(196, 207, 212);
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}
+
+.outputChanged {
+    border-right: 1px solid rgb(196, 207, 212);
+    border-top: 1px solid rgb(196, 207, 212);
+    border-bottom: 1px solid rgb(196, 207, 212);
+}

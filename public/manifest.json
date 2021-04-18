@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Text Compare App",
+  "name": "Text Compare React App",
   "icons": [
     {
       "src": "favicon.ico",

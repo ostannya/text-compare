@@ -4,8 +4,8 @@ import styles from '../Toolbar.module.css'
 
 export class Toolbar extends React.Component {
   render () {
-    const statRemovals = this.props.diff.filter(object => object.removed === true).length
-    const statAdditions = this.props.diff.filter(object => object.added === true).length
+    const statRemovals = this.props.diffArray.filter(object => object.removed === true).length
+    const statAdditions = this.props.diffArray.filter(object => object.added === true).length
     const tools = (
       <Menu onClick={this.props.onMenuClick}>
         <Menu.Item key='1' onClick={this.props.onLowercase}>To lowercase</Menu.Item>

@@ -6,7 +6,6 @@
          url('fonts/proximanova-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
 @font-face {
@@ -15,7 +14,6 @@
          url('fonts/proxima_nova_bold-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
@@ -54,12 +52,13 @@ html, body {
     height: 30px;
 }
 
-.diffInputs {
+.inputs {
     display: flex;
     margin-left: 5%;
     margin-right: 5%;
     align-content: center;
     text-align: center;
+    font-size: 16px;
 }
 
 .numberedInputs {
@@ -69,23 +68,22 @@ html, body {
     text-align: center;
 }
 
-.diffInputHeader {
+.inputHeader {
     text-align: center;
     padding: 10px 10px 10px 10px;
     position: sticky;
     font-size: 16px;
 }
 
-.diffInput {
+.input {
     height: 200px;
     width: 100%;
     position: relative;
 }
 
-.diffInputText {
+.inputText {
     padding: 5px 10px;
     padding-left: 0px;
-    caret-color: black;
     font-size: 14px;
     resize: none;
     border: none;
@@ -100,8 +98,7 @@ html, body {
     bottom: 0;
 }
 
-
-.inputScrollOriginal {
+.scrollOriginalContainer {
     border-left: 1px solid rgb(196, 207, 212);
     border-right: 1px solid rgb(196, 207, 212);
     border-top: 1px solid rgb(196, 207, 212);
@@ -110,7 +107,7 @@ html, body {
     overflow-y: auto;
 }
 
-.inputScrollChanged {
+.scrollChangedContainer {
     border-right: 1px solid rgb(196, 207, 212);
     border-top: 1px solid rgb(196, 207, 212);
     border-bottom: 1px solid rgb(196, 207, 212);
@@ -118,12 +115,7 @@ html, body {
     overflow-y: auto;
 }
 
-.innerScrollOriginal {
-    position: relative;
-    min-height: 200px;
-}
-
-.innerScrollChanged {
+.scroll {
     position: relative;
     min-height: 200px;
 }
@@ -134,68 +126,12 @@ html, body {
     z-index: 4;
 }
 
-.diffOutputs {
-    display: flex;
-    margin-left: 5%;
-    margin-right: 5%;
-    clear: both;
-}
-
-.output {
-    font-size: 14px;
-    margin-top: 20px;
-    text-align: left;
-    padding: 4px 10px;
-    width: 100%;
-    min-height: 70%;
-    overflow: scroll;
-    font-family: monospace, 'Roboto Mono';
-    height: 200px;
-    white-space: pre-wrap;
-}
-
-.outputLeft {
-    border-left: 1px solid rgb(196, 207, 212);
-    border-right: 1px solid rgb(196, 207, 212);
-    border-top: 1px solid rgb(196, 207, 212);
-    border-bottom: 1px solid rgb(196, 207, 212);
-}
-
-.outputRight {
-    border-right: 1px solid rgb(196, 207, 212);
-    border-top: 1px solid rgb(196, 207, 212);
-    border-bottom: 1px solid rgb(196, 207, 212);
-}
-
 .linesContainer {
     pointer-events: none;
     user-select: none;
     padding-top: 5px;
     padding-right: 4px;
     opacity: 0.5;
-}
-
-.numberedLineLeft {
-    position: relative;
-    padding-left: 20px;
-    min-height: 22px;
-}
-
-.numberedLineLeft::before {
-    position: absolute;
-    left: 0;
-    counter-increment: counterLeft;                
-    content: counter(counterLeft) " ";
-    color: rgb(196, 207, 212);
-    display: block;
-    padding: 0 10px 10px 0;
-    white-space: nowrap;
-}
-
-.numberedLineRight{
-    padding-left: 20px;
-    position: relative;
-    min-height: 22px;
 }
 
 .numberedOriginal {
@@ -223,28 +159,6 @@ html, body {
     padding: 0 10px 10px 0;
     overflow: scroll;
     margin-left: 10px;
-    
-}
-
-.numberedChanged::before {
-    counter-increment: counterChanged;
-    content: counter(counterChanged) " ";
-    color: rgb(196, 207, 212);
-    position: absolute;
-    left: 0;
-    display: block;
-    padding: 0 10px 10px 0;
-    overflow: scroll;
-    margin-left: 10px;
-}
-
-.numberedLineRight::before {
-    counter-increment: counterRight;                
-    content: counter(counterRight) " ";
-    display: block;
-    color: rgb(196, 207, 212);
-    position: absolute;
-    left: 0;
 }
 
 .numberedChanged {
@@ -260,6 +174,18 @@ html, body {
     font-size: 14px;
     padding-right: 10px;
     min-height: 22px;
+}
+
+.numberedChanged::before {
+    counter-increment: counterChanged;
+    content: counter(counterChanged) " ";
+    color: rgb(196, 207, 212);
+    position: absolute;
+    left: 0;
+    display: block;
+    padding: 0 10px 10px 0;
+    overflow: scroll;
+    margin-left: 10px;
 }
 
 .clearButton {
@@ -286,7 +212,7 @@ html, body {
     margin-top: 40px;
 }
 
-.githubButton {
+.gitHubButton {
     margin-top: 13px;
     align-self: center;
 }
