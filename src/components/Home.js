@@ -116,23 +116,24 @@ export class Home extends React.Component {
           {identical
             ? <div>The two texts are identical!</div>
             : null}
-          {!result
-            ? null
-            : (
-              <div>
-                <Toolbar
-                  diffArray={this.state.diffArray} onMenuClick={this.handleMenuClick.bind()} onLowercase={this.handleLowercase.bind()}
-                  onBreaksToSpaces={this.handleBreaksToSpaces.bind()} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces.bind()}
-                />
-                <Parts diffArray={this.state.diffArray} />
-                <div className={styles.outputButtons}>
-                  <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
-                  <Tooltip title='Swap'>
-                    <SwapOutlined className={styles.swapButton} onClick={this.handleSwap} />
-                  </Tooltip>
-                </div>
-              </div>
-            )}
+          {
+            !result
+              ? null
+              : (
+                <div>
+                  <Toolbar
+                    diffArray={this.state.diffArray} onMenuClick={this.handleMenuClick.bind()} onLowercase={this.handleLowercase.bind()}
+                    onBreaksToSpaces={this.handleBreaksToSpaces.bind()} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces.bind()}
+                  />
+                  <Parts diffArray={this.state.diffArray} />
+                  <div className={styles.outputButtons}>
+                    <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
+                    <Tooltip title='Swap'>
+                      <SwapOutlined className={styles.swapButton} onClick={this.handleSwap} />
+                    </Tooltip>
+                  </div>
+                </div>)
+          }
           <div className={`${styles.inputs} ${styles.numberedInputs}`}>
             <div className={styles.input}>
               <div className={styles.inputHeader}>Original Text</div>
