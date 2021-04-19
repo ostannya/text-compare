@@ -39,6 +39,12 @@
       "src/serviceWorker.js"
     ]
   },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": ["node_modules/(?!@shotgunjed)/"]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
