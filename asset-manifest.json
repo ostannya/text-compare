@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/text-compare/static/css/main.77dc602a.chunk.css",
-    "main.js": "/text-compare/static/js/main.0e09f47d.chunk.js",
-    "main.js.map": "/text-compare/static/js/main.0e09f47d.chunk.js.map",
-    "runtime-main.js": "/text-compare/static/js/runtime-main.8ad22d89.js",
-    "runtime-main.js.map": "/text-compare/static/js/runtime-main.8ad22d89.js.map",
+    "main.css": "/text-compare/static/css/main.74ad2d8b.chunk.css",
+    "main.js": "/text-compare/static/js/main.a5157cc1.chunk.js",
+    "main.js.map": "/text-compare/static/js/main.a5157cc1.chunk.js.map",
+    "runtime-main.js": "/text-compare/static/js/runtime-main.7d742b1d.js",
+    "runtime-main.js.map": "/text-compare/static/js/runtime-main.7d742b1d.js.map",
     "static/css/2.3c70e1d0.chunk.css": "/text-compare/static/css/2.3c70e1d0.chunk.css",
-    "static/js/2.6d7f9018.chunk.js": "/text-compare/static/js/2.6d7f9018.chunk.js",
-    "static/js/2.6d7f9018.chunk.js.map": "/text-compare/static/js/2.6d7f9018.chunk.js.map",
-    "static/js/3.8d16998e.chunk.js": "/text-compare/static/js/3.8d16998e.chunk.js",
-    "static/js/3.8d16998e.chunk.js.map": "/text-compare/static/js/3.8d16998e.chunk.js.map",
+    "static/js/2.0b9b46ec.chunk.js": "/text-compare/static/js/2.0b9b46ec.chunk.js",
+    "static/js/2.0b9b46ec.chunk.js.map": "/text-compare/static/js/2.0b9b46ec.chunk.js.map",
+    "static/js/3.0ddb54f0.chunk.js": "/text-compare/static/js/3.0ddb54f0.chunk.js",
+    "static/js/3.0ddb54f0.chunk.js.map": "/text-compare/static/js/3.0ddb54f0.chunk.js.map",
     "index.html": "/text-compare/index.html",
     "static/css/2.3c70e1d0.chunk.css.map": "/text-compare/static/css/2.3c70e1d0.chunk.css.map",
-    "static/css/main.77dc602a.chunk.css.map": "/text-compare/static/css/main.77dc602a.chunk.css.map",
-    "static/js/2.6d7f9018.chunk.js.LICENSE.txt": "/text-compare/static/js/2.6d7f9018.chunk.js.LICENSE.txt",
+    "static/css/main.74ad2d8b.chunk.css.map": "/text-compare/static/css/main.74ad2d8b.chunk.css.map",
+    "static/js/2.0b9b46ec.chunk.js.LICENSE.txt": "/text-compare/static/js/2.0b9b46ec.chunk.js.LICENSE.txt",
     "static/media/Home.module.css": "/text-compare/static/media/proximanova-regular-webfont.8478ce61.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.8ad22d89.js",
+    "static/js/runtime-main.7d742b1d.js",
     "static/css/2.3c70e1d0.chunk.css",
-    "static/js/2.6d7f9018.chunk.js",
-    "static/css/main.77dc602a.chunk.css",
-    "static/js/main.0e09f47d.chunk.js"
+    "static/js/2.0b9b46ec.chunk.js",
+    "static/css/main.74ad2d8b.chunk.css",
+    "static/js/main.a5157cc1.chunk.js"
   ]
 }
