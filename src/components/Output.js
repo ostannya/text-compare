@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../Parts.module.css'
+import styles from '../Output.module.css'
 
 const lineBreakedDiff = (partsDiff) => {
   const lines = []
@@ -44,7 +44,7 @@ function ColoredRemovedOrAdded ({ line, index, color, removedOrAdded, numbered }
   )
 }
 
-export class Parts extends React.Component {
+export class Output extends React.Component {
   render () {
     const partsRemoved = lineBreakedDiff(this.props.diffArray.filter(object => !(object.added === true)))
       .map((line, index) => <ColoredRemovedOrAdded key={index} line={line} color='#ffc4c1' numbered={styles.numberedOriginal} removedOrAdded='removed' />)
@@ -58,4 +58,4 @@ export class Parts extends React.Component {
     )
   }
 }
-export default Parts
+export default Output

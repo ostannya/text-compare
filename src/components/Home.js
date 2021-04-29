@@ -5,7 +5,9 @@ import { SwapOutlined } from '@ant-design/icons'
 import Toolbar from './Toolbar'
 import logo from '../assets/logo.png'
 import GitHubButton from 'react-github-btn'
-import Parts from './Parts'
+import Output from './Output'
+import * as Diff from 'diff'
+import Input from './Input'
 
 function removeWhiteSpaces (text) {
   const result = text.replace(/\s{2,}/g, ' ').trim()
@@ -28,8 +30,6 @@ export class Home extends React.Component {
     this.handleBreaksToSpaces = this.handleBreaksToSpaces.bind(this)
     this.handleRemoveWhiteSpaces = this.handleRemoveWhiteSpaces.bind(this)
     this.handleSwap = this.handleSwap.bind(this)
-    this.changed = React.createRef()
-    this.original = React.createRef()
     this.state = {
       diffArray: [],
       result: false,
@@ -41,9 +41,8 @@ export class Home extends React.Component {
   }
 
   handleCompare () {
-    const Diff = require('diff')
-    const original = this.original.current.value
-    const changed = this.changed.current.value
+    const original = this.state.original
+    const changed = this.state.changed
     const diffArray = Diff.diffChars(original, changed)
     if (original === changed) {
       this.setState({ identical: true, result: false })
@@ -52,14 +51,12 @@ export class Home extends React.Component {
     }
   }
 
-  handleChange () {
-    this.setState({ original: this.original.current.value, changed: this.changed.current.value })
+  handleChange (original, changed) {
+    this.setState({ original, changed })
   }
 
   handleClear () {
-    this.original.current.value = ''
-    this.changed.current.value = ''
-    this.setState({ result: false, identical: false, original: this.original.current.value, changed: this.changed.current.value })
+    this.setState({ result: false, identical: false, original: '', changed: '' })
   }
 
   handleMenuClick () {
@@ -67,45 +64,43 @@ export class Home extends React.Component {
   }
 
   handleLowercase () {
-    this.original.current.value = this.original.current.value.toLowerCase()
-    this.changed.current.value = this.changed.current.value.toLowerCase()
-    this.setState({ identical: false })
+    this.setState({
+      identical: false,
+      original: this.state.original.toLocaleLowerCase(),
+      changed: this.state.changed.toLocaleLowerCase()
+    })
   }
 
   handleBreaksToSpaces () {
-    this.original.current.value = replaceBreaks(this.original.current.value)
-    this.changed.current.value = replaceBreaks(this.changed.current.value)
-    this.setState({ identical: false })
+    this.setState({
+      identical: false,
+      original: replaceBreaks(this.state.original),
+      changed: replaceBreaks(this.state.changed)
+    })
   }
 
   handleRemoveWhiteSpaces () {
-    this.original.current.value = removeWhiteSpaces(this.original.current.value)
-    this.changed.current.value = removeWhiteSpaces(this.changed.current.value)
-    this.setState({ identical: false })
+    this.setState({
+      identical: false,
+      original: removeWhiteSpaces(this.state.original),
+      changed: removeWhiteSpaces(this.state.changed)
+    })
   }
 
   handleSwap () {
     if (this.state.swapped === false) {
-      [this.original.current.value, this.changed.current.value] = [this.changed.current.value, this.original.current.value]
+      [this.state.original, this.state.changed] = [this.state.changed, this.state.original]
       this.handleCompare()
       this.setState({ identical: false, swapped: true })
     } else {
-      [this.changed.current.value, this.original.current.value] = [this.original.current.value, this.changed.current.value]
+      [this.state.changed, this.state.original] = [this.state.original, this.state.changed]
       this.setState({ identical: false, swapped: false })
       this.handleCompare()
     }
   }
 
   render () {
-    const { result, identical, original, changed } = this.state
-    const originalBreakedByLine = original.split('\n').map(function (inputLine, index) {
-      return (
-        <div className={styles.numberedOriginal} key={index}>{inputLine}</div>)
-    })
-    const changedBreackedByLine = changed.split('\n').map(function (inputLine, index) {
-      return (
-        <div className={styles.numberedChanged} key={index}>{inputLine}</div>)
-    })
+    const { result, identical } = this.state
     return (
       <div className={styles.container}>
         <div className={styles.main}>
@@ -122,46 +117,38 @@ export class Home extends React.Component {
               : (
                 <div>
                   <Toolbar
-                    diffArray={this.state.diffArray} onMenuClick={this.handleMenuClick.bind()} onLowercase={this.handleLowercase.bind()}
-                    onBreaksToSpaces={this.handleBreaksToSpaces.bind()} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces.bind()}
+                    diffArray={this.state.diffArray} onMenuClick={this.handleMenuClick} onLowercase={this.handleLowercase}
+                    onBreaksToSpaces={this.handleBreaksToSpaces} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces}
                   />
-                  <Parts diffArray={this.state.diffArray} />
+                  <Output diffArray={this.state.diffArray} />
                   <div className={styles.outputButtons}>
-                    <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
+                    <Button className={styles.clearButton} onClick={this.handleClear.bind(this)}>Clear</Button>
                     <Tooltip title='Swap'>
                       <SwapOutlined className={styles.swapButton} onClick={this.handleSwap} />
                     </Tooltip>
                   </div>
                 </div>)
           }
-          <div className={`${styles.inputs} ${styles.numberedInputs}`}>
-            <div className={styles.input}>
-              <div className={styles.inputHeader}>Original Text</div>
-              <div className={styles.scrollOriginalContainer}>
-                <div className={styles.scroll}>
-                  <div className={styles.linesContainer}>{originalBreakedByLine}</div>
-                  <textarea spellCheck='false' className={styles.inputText} onChange={this.handleChange.bind()} ref={this.original} />
-                </div>
-              </div>
-            </div>
-            <div className={styles.input}>
-              <div className={styles.inputHeader}>Changed Text</div>
-              <div className={styles.scrollChangedContainer}>
-                <div className={styles.scroll}>
-                  <div className={styles.linesContainer}>{changedBreackedByLine}</div>
-                  <textarea spellCheck='false' className={styles.inputText} onChange={this.handleChange.bind()} ref={this.changed} />
-                </div>
-              </div>
-            </div>
-          </div>
+          <Input
+            onChange={this.handleChange}
+            original={this.state.original} changed={this.state.changed}
+          />
           <Button type='primary' className={styles.compareButton} onClick={this.handleCompare}>Compare</Button>
           <div className={styles.push} />
         </div>
         <div className={styles.footer}>
           <div className={styles.gitHubButton}>
-            <GitHubButton href='https://github.com/ostannya/text-compare' aria-label='Star ostannya/text-compare on GitHub'>Star on GitHub</GitHubButton>
+            <GitHubButton
+              href='https://github.com/ostannya/text-compare'
+              aria-label='Star ostannya/text-compare on GitHub'
+            >Star on GitHub
+            </GitHubButton>
           </div>
-          <div className={styles.footerText}>2Text Compare is a an open source side-by-side text comparison tool. Created using ⚛️ React and <a href='https://github.com/kpdecker/jsdiff'>jsdiff</a> library.</div>
+          <div
+            className={styles.footerText}
+          >2Text Compare is a an open source side-by-side text comparison tool. Created using ⚛️ React and
+            <a href='https://github.com/kpdecker/jsdiff'> jsdiff</a> library.
+          </div>
         </div>
       </div>
     )

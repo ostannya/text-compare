@@ -9,8 +9,8 @@ export class Toolbar extends React.Component {
     const tools = (
       <Menu onClick={this.props.onMenuClick}>
         <Menu.Item key='1' onClick={this.props.onLowercase}>To lowercase</Menu.Item>
-        <Menu.Item key='2' onClick={this.props.onBreakstoSpaces}>Replace line breaks with spaces</Menu.Item>
-        <Menu.Item key='3' onClick={this.props.onRemoveWhitespaces}>Remove excess whitespace</Menu.Item>
+        <Menu.Item key='2' onClick={this.props.onBreaksToSpaces}>Replace line breaks with spaces</Menu.Item>
+        <Menu.Item key='3' onClick={this.props.onRemoveWhiteSpaces}>Remove excess whitespace</Menu.Item>
       </Menu>
     )
     return (

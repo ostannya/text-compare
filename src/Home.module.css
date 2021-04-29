@@ -52,69 +52,6 @@ html, body {
     height: 30px;
 }
 
-.inputs {
-    display: flex;
-    margin-left: 5%;
-    margin-right: 5%;
-    align-content: center;
-    text-align: center;
-    font-size: 16px;
-}
-
-.numberedInputs {
-    margin-left: 5%;
-    margin-right: 5%;
-    align-content: center;
-    text-align: center;
-}
-
-.inputHeader {
-    text-align: center;
-    padding: 10px 10px 10px 10px;
-    position: sticky;
-    font-size: 16px;
-}
-
-.input {
-    height: 200px;
-    width: 100%;
-    position: relative;
-}
-
-.inputText {
-    padding: 5px 10px;
-    padding-left: 0px;
-    font-size: 14px;
-    resize: none;
-    border: none;
-    outline: none;
-    font-family: monospace, 'Roboto Mono';
-    position: absolute;
-    left: 30px;
-    width: calc(100% - 30px);
-    overflow: hidden;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-.scrollOriginalContainer {
-    border-left: 1px solid rgb(196, 207, 212);
-    border-right: 1px solid rgb(196, 207, 212);
-    border-top: 1px solid rgb(196, 207, 212);
-    border-bottom: 1px solid rgb(196, 207, 212);
-    height: 200px;
-    overflow-y: auto;
-}
-
-.scrollChangedContainer {
-    border-right: 1px solid rgb(196, 207, 212);
-    border-top: 1px solid rgb(196, 207, 212);
-    border-bottom: 1px solid rgb(196, 207, 212);
-    height: 200px;
-    overflow-y: auto;
-}
-
 .scroll {
     position: relative;
     min-height: 200px;
@@ -124,68 +61,6 @@ html, body {
     margin: 10px auto;
     bottom: -45px;
     z-index: 4;
-}
-
-.linesContainer {
-    pointer-events: none;
-    user-select: none;
-    padding-top: 5px;
-    padding-right: 4px;
-    opacity: 0.5;
-}
-
-.numberedOriginal {
-    position: relative;
-    display: block;
-    color: blue;
-    text-align: left;
-    padding-left: 30px;
-    font-family: monospace, 'Roboto Mono';
-    width: 100%;
-    min-height: 100%;
-    overflow: scroll;
-    font-size: 14px;
-    padding-right: 10px;
-    min-height: 22px;
-}
-
-.numberedOriginal::before {
-    counter-increment: counterOriginal;
-    content: counter(counterOriginal) " ";
-    color: rgb(196, 207, 212);
-    position: absolute;
-    left: 0;
-    display: block;
-    padding: 0 10px 10px 0;
-    overflow: scroll;
-    margin-left: 10px;
-}
-
-.numberedChanged {
-    position: relative;
-    display: block;
-    color: red;
-    text-align: left;
-    padding-left: 30px;
-    font-family: monospace, 'Roboto Mono';
-    width: 100%;
-    min-height: 100%;
-    overflow: scroll;
-    font-size: 14px;
-    padding-right: 10px;
-    min-height: 22px;
-}
-
-.numberedChanged::before {
-    counter-increment: counterChanged;
-    content: counter(counterChanged) " ";
-    color: rgb(196, 207, 212);
-    position: absolute;
-    left: 0;
-    display: block;
-    padding: 0 10px 10px 0;
-    overflow: scroll;
-    margin-left: 10px;
 }
 
 .clearButton {
