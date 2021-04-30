@@ -1,16 +1,17 @@
 import React from 'react'
 import styles from '../Input.module.css'
 
+function BreakedByLine ({ numbered, index, inputLine }) {
+  return (
+    <div className={numbered} key={index}>{inputLine}</div>)
+}
+
 export class Input extends React.Component {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.changed = React.createRef()
     this.original = React.createRef()
-    this.state = {
-      original: '',
-      changed: ''
-    }
   }
 
   handleChange () {
@@ -20,14 +21,10 @@ export class Input extends React.Component {
 
   render () {
     const { original, changed } = this.props
-    const originalBreakedByLine = original.split('\n').map(function (inputLine, index) {
-      return (
-        <div className={styles.numberedOriginal} key={index}>{inputLine}</div>)
-    })
-    const changedBreackedByLine = changed.split('\n').map(function (inputLine, index) {
-      return (
-        <div className={styles.numberedChanged} key={index}>{inputLine}</div>)
-    })
+    const originalBreakedByLine = original.split('\n').map((inputLine, index) =>
+      <BreakedByLine key={index} inputLine={inputLine} numbered={styles.numberedOriginal} />)
+    const changedBreackedByLine = changed.split('\n').map((inputLine, index) =>
+      <BreakedByLine key={index} inputLine={inputLine} numbered={styles.numberedChanged} />)
     return (
       <div className={styles.container}>
         <div className={styles.main}>

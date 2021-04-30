@@ -122,7 +122,7 @@ export class Home extends React.Component {
                   />
                   <Output diffArray={this.state.diffArray} />
                   <div className={styles.outputButtons}>
-                    <Button className={styles.clearButton} onClick={this.handleClear.bind(this)}>Clear</Button>
+                    <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
                     <Tooltip title='Swap'>
                       <SwapOutlined className={styles.swapButton} onClick={this.handleSwap} />
                     </Tooltip>
