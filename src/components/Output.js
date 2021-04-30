@@ -33,6 +33,7 @@ function ColoredRemovedOrAdded ({ line, index, color, removedOrAdded, numbered }
   return (
     <div className={numbered} key={index}>
       {line.map(function (object, index, parts) {
+        // parts == line
         const nextObject = parts[index + 1]
         if (nextObject && nextObject[removedOrAdded] && nextObject.value === '\n') {
           return <span style={{ backgroundColor: color }} key={index}>{object.value}</span>

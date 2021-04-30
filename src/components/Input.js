@@ -7,6 +7,7 @@ export class Input extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.changed = React.createRef()
     this.original = React.createRef()
+    // where state is used?
     this.state = {
       original: '',
       changed: ''
@@ -24,6 +25,7 @@ export class Input extends React.Component {
       return (
         <div className={styles.numberedOriginal} key={index}>{inputLine}</div>)
     })
+    // code duplication
     const changedBreackedByLine = changed.split('\n').map(function (inputLine, index) {
       return (
         <div className={styles.numberedChanged} key={index}>{inputLine}</div>)

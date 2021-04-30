@@ -116,12 +116,14 @@ export class Home extends React.Component {
               ? null
               : (
                 <div>
+                  {/* this is ok, but candidate to refractor with redux; can be called leaky abstraction https://en.wikipedia.org/wiki/Leaky_abstraction */}
                   <Toolbar
                     diffArray={this.state.diffArray} onMenuClick={this.handleMenuClick} onLowercase={this.handleLowercase}
                     onBreaksToSpaces={this.handleBreaksToSpaces} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces}
                   />
                   <Output diffArray={this.state.diffArray} />
                   <div className={styles.outputButtons}>
+                    {/* already bind to  handleClear in constructor */}
                     <Button className={styles.clearButton} onClick={this.handleClear.bind(this)}>Clear</Button>
                     <Tooltip title='Swap'>
                       <SwapOutlined className={styles.swapButton} onClick={this.handleSwap} />
