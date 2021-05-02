@@ -21,9 +21,10 @@ export class Input extends React.Component {
 
   render () {
     const { original, changed } = this.props
+    console.log(this.props.original)
     const originalBreakedByLine = original.split('\n').map((inputLine, index) =>
       <BreakedByLine key={index} inputLine={inputLine} numbered={styles.numberedOriginal} />)
-    const changedBreackedByLine = changed.split('\n').map((inputLine, index) =>
+    const changedBreakedByLine = changed.split('\n').map((inputLine, index) =>
       <BreakedByLine key={index} inputLine={inputLine} numbered={styles.numberedChanged} />)
     return (
       <div className={styles.container}>
@@ -45,7 +46,7 @@ export class Input extends React.Component {
               <div className={styles.inputHeader}>Changed Text</div>
               <div className={styles.scrollChangedContainer}>
                 <div className={styles.scroll}>
-                  <div className={styles.linesContainer}>{changedBreackedByLine}</div>
+                  <div className={styles.linesContainer}>{changedBreakedByLine}</div>
                   <textarea
                     spellCheck='false' className={styles.inputText} onChange={this.handleChange} ref={this.changed}
                     value={this.props.changed}

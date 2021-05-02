@@ -52,11 +52,6 @@ html, body {
     height: 30px;
 }
 
-.scroll {
-    position: relative;
-    min-height: 200px;
-}
-
 .compareButton {
     margin: 10px auto;
     bottom: -45px;

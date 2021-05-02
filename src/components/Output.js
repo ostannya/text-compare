@@ -32,8 +32,8 @@ const lineBreakedDiff = (partsDiff) => {
 function ColoredRemovedOrAdded ({ line, index, color, removedOrAdded, numbered }) {
   return (
     <div className={numbered} key={index}>
-      {line.map(function (object, index, part) {
-        const nextObject = part[index + 1]
+      {line.map(function (object, index, line) {
+        const nextObject = line[index + 1]
         if (nextObject && nextObject[removedOrAdded] && nextObject.value === '\n') {
           return <span style={{ backgroundColor: color }} key={index}>{object.value}</span>
         } else {
