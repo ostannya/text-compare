@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/text-compare/static/css/main.74ad2d8b.chunk.css",
-    "main.js": "/text-compare/static/js/main.a5157cc1.chunk.js",
-    "main.js.map": "/text-compare/static/js/main.a5157cc1.chunk.js.map",
+    "main.css": "/text-compare/static/css/main.993746c5.chunk.css",
+    "main.js": "/text-compare/static/js/main.814276a9.chunk.js",
+    "main.js.map": "/text-compare/static/js/main.814276a9.chunk.js.map",
     "runtime-main.js": "/text-compare/static/js/runtime-main.7d742b1d.js",
     "runtime-main.js.map": "/text-compare/static/js/runtime-main.7d742b1d.js.map",
     "static/css/2.3c70e1d0.chunk.css": "/text-compare/static/css/2.3c70e1d0.chunk.css",
@@ -12,7 +12,7 @@
     "static/js/3.0ddb54f0.chunk.js.map": "/text-compare/static/js/3.0ddb54f0.chunk.js.map",
     "index.html": "/text-compare/index.html",
     "static/css/2.3c70e1d0.chunk.css.map": "/text-compare/static/css/2.3c70e1d0.chunk.css.map",
-    "static/css/main.74ad2d8b.chunk.css.map": "/text-compare/static/css/main.74ad2d8b.chunk.css.map",
+    "static/css/main.993746c5.chunk.css.map": "/text-compare/static/css/main.993746c5.chunk.css.map",
     "static/js/2.0b9b46ec.chunk.js.LICENSE.txt": "/text-compare/static/js/2.0b9b46ec.chunk.js.LICENSE.txt",
     "static/media/Home.module.css": "/text-compare/static/media/proximanova-regular-webfont.8478ce61.woff"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.7d742b1d.js",
     "static/css/2.3c70e1d0.chunk.css",
     "static/js/2.0b9b46ec.chunk.js",
-    "static/css/main.74ad2d8b.chunk.css",
-    "static/js/main.a5157cc1.chunk.js"
+    "static/css/main.993746c5.chunk.css",
+    "static/js/main.814276a9.chunk.js"
   ]
 }
