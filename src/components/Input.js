@@ -21,7 +21,6 @@ export class Input extends React.Component {
 
   render () {
     const { original, changed } = this.props
-    console.log(this.props.original)
     const originalBreakedByLine = original.split('\n').map((inputLine, index) =>
       <BreakedByLine key={index} inputLine={inputLine} numbered={styles.numberedOriginal} />)
     const changedBreakedByLine = changed.split('\n').map((inputLine, index) =>

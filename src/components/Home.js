@@ -8,6 +8,16 @@ import GitHubButton from 'react-github-btn'
 import Output from './Output'
 import * as Diff from 'diff'
 import Input from './Input'
+import { connect } from 'react-redux'
+import store from '../redux/store.js'
+import { identical, notIdentical } from '../redux/actions.js'
+
+function mapStateToProps (state) {
+  return {
+    identical: state.identical,
+    result: state.result
+  }
+}
 
 function removeWhiteSpaces (text) {
   const result = text.replace(/\s{2,}/g, ' ').trim()
@@ -33,7 +43,8 @@ export class Home extends React.Component {
     this.state = {
       diffArray: [],
       result: false,
-      identical: false,
+      // try to connect Redux to identical
+      // identical: false,
       swapped: false,
       original: '',
       changed: ''
@@ -45,9 +56,17 @@ export class Home extends React.Component {
     const changed = this.state.changed
     const diffArray = Diff.diffChars(original, changed)
     if (original === changed) {
-      this.setState({ identical: true, result: false })
+      store.dispatch(identical())
+      // store.dispatch(noResult())
+      // console.log('state in Home:', this.state.identical)
+      // this.setState({ identical: true, result: false })
+      this.setState({ result: false })
     } else {
-      this.setState({ diffArray: diffArray, result: true, identical: false })
+      // this.setState({ identical: false })
+      store.dispatch(notIdentical())
+      // store.dispatch(result())
+      this.setState({ diffArray: diffArray })
+      this.setState({ result: false })
     }
   }
 
@@ -56,51 +75,64 @@ export class Home extends React.Component {
   }
 
   handleClear () {
-    this.setState({ result: false, identical: false, original: '', changed: '' })
+    this.setState({ original: '', changed: '' })
+    store.dispatch(notIdentical())
+    // store.dispatch(noResult())
+    // this.setState({ identical: false })
+    this.setState({ result: false })
   }
 
   handleMenuClick () {
-    this.setState({ identical: false })
+    store.dispatch(notIdentical())
+    // this.setState({ identical: false })
   }
 
   handleLowercase () {
     this.setState({
-      identical: false,
       original: this.state.original.toLocaleLowerCase(),
       changed: this.state.changed.toLocaleLowerCase()
     })
+    store.dispatch(notIdentical())
+    // this.setState({ identical: false })
   }
 
   handleBreaksToSpaces () {
     this.setState({
-      identical: false,
       original: replaceBreaks(this.state.original),
       changed: replaceBreaks(this.state.changed)
     })
+    store.dispatch(notIdentical())
+    // this.setState({ identical: false })
   }
 
   handleRemoveWhiteSpaces () {
     this.setState({
-      identical: false,
       original: removeWhiteSpaces(this.state.original),
       changed: removeWhiteSpaces(this.state.changed)
     })
+    store.dispatch(notIdentical())
+    // this.setState({ identical: false })
   }
 
   handleSwap () {
     if (this.state.swapped === false) {
       [this.state.original, this.state.changed] = [this.state.changed, this.state.original]
       this.handleCompare()
-      this.setState({ identical: false, swapped: true })
+      this.setState({ swapped: true })
+      store.dispatch(notIdentical())
+      // this.setState({ identical: false })
     } else {
       [this.state.changed, this.state.original] = [this.state.original, this.state.changed]
-      this.setState({ identical: false, swapped: false })
+      this.setState({ swapped: false })
+      store.dispatch(notIdentical())
+      // this.setState({ identical: false })
       this.handleCompare()
     }
   }
 
   render () {
-    const { result, identical } = this.state
+    const { identical } = this.props
+    const { result } = this.state
     return (
       <div className={styles.container}>
         <div className={styles.main}>
@@ -155,4 +187,4 @@ export class Home extends React.Component {
   }
 }
 
-export default Home
+export default connect(mapStateToProps)(Home)
