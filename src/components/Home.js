@@ -14,8 +14,8 @@ import { identical, notIdentical } from '../redux/actions.js'
 
 function mapStateToProps (state) {
   return {
-    identical: state.identical,
-    result: state.result
+    identical: state.identical
+    // result: state.result
   }
 }
 
