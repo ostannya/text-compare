@@ -14,7 +14,7 @@ import { identical, notIdentical } from '../redux/actions.js'
 
 function mapStateToProps (state) {
   return {
-    identical: state.identical
+    identical: state.isIdentical.identical
   }
 }
 
@@ -42,8 +42,6 @@ export class Home extends React.Component {
     this.state = {
       diffArray: [],
       result: false,
-      // try to connect Redux to identical
-      // identical: false,
       swapped: false,
       original: '',
       changed: ''
@@ -56,14 +54,10 @@ export class Home extends React.Component {
     const diffArray = Diff.diffChars(original, changed)
     if (original === changed) {
       store.dispatch(identical())
-      // console.log('state in Home:', this.state.identical)
-      // this.setState({ identical: true, result: false })
       this.setState({ result: false })
     } else {
-      // this.setState({ identical: false })
       store.dispatch(notIdentical())
-      this.setState({ diffArray: diffArray })
-      this.setState({ result: false })
+      this.setState({ diffArray: diffArray, result: true })
     }
   }
 
@@ -74,13 +68,11 @@ export class Home extends React.Component {
   handleClear () {
     this.setState({ original: '', changed: '' })
     store.dispatch(notIdentical())
-    // this.setState({ identical: false })
     this.setState({ result: false })
   }
 
   handleMenuClick () {
     store.dispatch(notIdentical())
-    // this.setState({ identical: false })
   }
 
   handleLowercase () {
@@ -89,7 +81,6 @@ export class Home extends React.Component {
       changed: this.state.changed.toLocaleLowerCase()
     })
     store.dispatch(notIdentical())
-    // this.setState({ identical: false })
   }
 
   handleBreaksToSpaces () {
@@ -98,7 +89,6 @@ export class Home extends React.Component {
       changed: replaceBreaks(this.state.changed)
     })
     store.dispatch(notIdentical())
-    // this.setState({ identical: false })
   }
 
   handleRemoveWhiteSpaces () {
@@ -107,7 +97,6 @@ export class Home extends React.Component {
       changed: removeWhiteSpaces(this.state.changed)
     })
     store.dispatch(notIdentical())
-    // this.setState({ identical: false })
   }
 
   handleSwap () {
@@ -116,12 +105,10 @@ export class Home extends React.Component {
       this.handleCompare()
       this.setState({ swapped: true })
       store.dispatch(notIdentical())
-      // this.setState({ identical: false })
     } else {
       [this.state.changed, this.state.original] = [this.state.original, this.state.changed]
       this.setState({ swapped: false })
       store.dispatch(notIdentical())
-      // this.setState({ identical: false })
       this.handleCompare()
     }
   }

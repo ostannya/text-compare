@@ -4,7 +4,7 @@ import {
 } from './reducers.js'
 
 const rootReducer = combineReducers({
-  identical: identicalReducer
+  isIdentical: identicalReducer
 })
 
 const store = createStore(rootReducer)

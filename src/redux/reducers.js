@@ -3,17 +3,17 @@ import {
   IS_NOT_IDENTICAL
 } from './constants.js'
 
-const initialState = {
+const INITIAL_STATE = {
   identical: false
 }
 
-export function identicalReducer (state = initialState, action) {
+export function identicalReducer (state = INITIAL_STATE, action) {
   switch (action.type) {
     case IS_IDENTICAL:
-      return !state.identical
+      return { ...state, identical: true }
     case IS_NOT_IDENTICAL:
-      return state.identical
+      return { ...state, identical: false }
     default:
-      return state.identical
+      return state
   }
 }
