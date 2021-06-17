@@ -15,7 +15,6 @@ import { identical, notIdentical } from '../redux/actions.js'
 function mapStateToProps (state) {
   return {
     identical: state.identical
-    // result: state.result
   }
 }
 
@@ -57,14 +56,12 @@ export class Home extends React.Component {
     const diffArray = Diff.diffChars(original, changed)
     if (original === changed) {
       store.dispatch(identical())
-      // store.dispatch(noResult())
       // console.log('state in Home:', this.state.identical)
       // this.setState({ identical: true, result: false })
       this.setState({ result: false })
     } else {
       // this.setState({ identical: false })
       store.dispatch(notIdentical())
-      // store.dispatch(result())
       this.setState({ diffArray: diffArray })
       this.setState({ result: false })
     }
@@ -77,7 +74,6 @@ export class Home extends React.Component {
   handleClear () {
     this.setState({ original: '', changed: '' })
     store.dispatch(notIdentical())
-    // store.dispatch(noResult())
     // this.setState({ identical: false })
     this.setState({ result: false })
   }
