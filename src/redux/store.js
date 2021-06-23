@@ -1,10 +1,12 @@
 import { createStore, combineReducers } from 'redux'
 import {
-  identicalReducer
+  identicalReducer,
+  resultReducer
 } from './reducers.js'
 
 const rootReducer = combineReducers({
-  isIdentical: identicalReducer
+  isIdentical: identicalReducer,
+  hasResult: resultReducer
 })
 
 const store = createStore(rootReducer)

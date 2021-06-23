@@ -10,11 +10,13 @@ import * as Diff from 'diff'
 import Input from './Input'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
-import { identical, notIdentical } from '../redux/actions.js'
+import { identical, notIdentical, result, noResult } from '../redux/actions.js'
 
 function mapStateToProps (state) {
+  console.log(state)
   return {
-    identical: state.isIdentical.identical
+    identical: state.isIdentical.identical,
+    result: state.hasResult.result
   }
 }
 
@@ -41,7 +43,6 @@ export class Home extends React.Component {
     this.handleSwap = this.handleSwap.bind(this)
     this.state = {
       diffArray: [],
-      result: false,
       swapped: false,
       original: '',
       changed: ''
@@ -54,10 +55,11 @@ export class Home extends React.Component {
     const diffArray = Diff.diffChars(original, changed)
     if (original === changed) {
       store.dispatch(identical())
-      this.setState({ result: false })
+      store.dispatch(noResult())
     } else {
       store.dispatch(notIdentical())
-      this.setState({ diffArray: diffArray, result: true })
+      store.dispatch(result())
+      this.setState({ diffArray: diffArray })
     }
   }
 
@@ -68,7 +70,7 @@ export class Home extends React.Component {
   handleClear () {
     this.setState({ original: '', changed: '' })
     store.dispatch(notIdentical())
-    this.setState({ result: false })
+    store.dispatch(noResult())
   }
 
   handleMenuClick () {
@@ -114,8 +116,7 @@ export class Home extends React.Component {
   }
 
   render () {
-    const { identical } = this.props
-    const { result } = this.state
+    const { identical, result } = this.props
     return (
       <div className={styles.container}>
         <div className={styles.main}>
