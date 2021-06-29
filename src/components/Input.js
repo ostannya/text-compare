@@ -46,6 +46,7 @@ export class Input extends React.Component {
               <div className={styles.scrollChangedContainer}>
                 <div className={styles.scroll}>
                   <div className={styles.linesContainer}>{changedBreakedByLine}</div>
+                  {/* not editable because I'd have to clear formatting */}
                   <textarea
                     spellCheck='false' className={styles.inputText} onChange={this.handleChange} ref={this.changed}
                     value={this.props.changed}

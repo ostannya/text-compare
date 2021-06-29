@@ -2,7 +2,10 @@ import {
   IS_IDENTICAL,
   IS_NOT_IDENTICAL,
   RESULT,
-  NO_RESULT
+  NO_RESULT,
+  SWAPPED,
+  NOT_SWAPPED,
+  DIFF_ARRAY
 } from './constants.js'
 
 export const identical = () => {
@@ -19,4 +22,16 @@ export const result = () => {
 
 export const noResult = () => {
   return { type: NO_RESULT }
+}
+
+export const swapped = () => {
+  return { type: SWAPPED }
+}
+
+export const notSwapped = () => {
+  return { type: NOT_SWAPPED }
+}
+
+export const diffArray = () => {
+  return { type: DIFF_ARRAY }
 }

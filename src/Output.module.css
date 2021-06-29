@@ -4,6 +4,7 @@
     min-height: 22px;
 }
 
+/* ::before pseudo-elements to insert content without it needing to be in the HTML */
 .numberedOriginal::before {
     position: absolute;
     left: 0;
