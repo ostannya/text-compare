@@ -44,7 +44,6 @@ function ColoredRemovedOrAdded ({ line, index, color, removedOrAdded, numbered }
   )
 }
 
-// Cannot read property 'filter' of undefined
 export class Output extends React.Component {
   render () {
     const partsRemoved = lineBreakedDiff(this.props.diffArray.filter(object => !(object.added === true)))

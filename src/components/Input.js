@@ -1,5 +1,15 @@
 import React from 'react'
 import styles from '../Input.module.css'
+import { valueChangeChanged, valueChangeOriginal } from '../redux/actions.js'
+import store from '../redux/store.js'
+import { connect } from 'react-redux'
+
+function mapStateToProps (state) {
+  return {
+    original: state.original,
+    changed: state.changed
+  }
+}
 
 function BreakedByLine ({ numbered, index, inputLine }) {
   return (
@@ -9,14 +19,18 @@ function BreakedByLine ({ numbered, index, inputLine }) {
 export class Input extends React.Component {
   constructor (props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChangeOriginal = this.handleChangeOriginal.bind(this)
+    this.handleChangeChanged = this.handleChangeChanged.bind(this)
     this.changed = React.createRef()
     this.original = React.createRef()
   }
 
-  handleChange () {
-    this.setState({ original: this.original.current.value, changed: this.changed.current.value })
-    this.props.onChange(this.original.current.value, this.changed.current.value)
+  handleChangeOriginal () {
+    store.dispatch(valueChangeOriginal(this.original.current.value))
+  }
+
+  handleChangeChanged () {
+    store.dispatch(valueChangeChanged(this.changed.current.value))
   }
 
   render () {
@@ -35,7 +49,7 @@ export class Input extends React.Component {
                 <div className={styles.scroll}>
                   <div className={styles.linesContainer}>{originalBreakedByLine}</div>
                   <textarea
-                    spellCheck='false' className={styles.inputText} onChange={this.handleChange} ref={this.original}
+                    spellCheck='false' className={styles.inputText} onChange={this.handleChangeOriginal} ref={this.original}
                     value={this.props.original}
                   />
                 </div>
@@ -46,10 +60,9 @@ export class Input extends React.Component {
               <div className={styles.scrollChangedContainer}>
                 <div className={styles.scroll}>
                   <div className={styles.linesContainer}>{changedBreakedByLine}</div>
-                  {/* not editable because I'd have to clear formatting */}
                   <textarea
-                    spellCheck='false' className={styles.inputText} onChange={this.handleChange} ref={this.changed}
-                    value={this.props.changed}
+                    spellCheck='false' className={styles.inputText} onChange={this.handleChangeChanged}
+                    ref={this.changed} value={this.props.changed}
                   />
                 </div>
               </div>
@@ -61,4 +74,4 @@ export class Input extends React.Component {
   }
 }
 
-export default Input
+export default connect(mapStateToProps)(Input)

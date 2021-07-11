@@ -6,18 +6,19 @@ import Toolbar from './Toolbar'
 import logo from '../assets/logo.png'
 import GitHubButton from 'react-github-btn'
 import Output from './Output'
-// import * as Diff from 'diff'
+import * as Diff from 'diff'
 import Input from './Input'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
-import { identical, notIdentical, result, noResult, swapped, notSwapped, diffArray } from '../redux/actions.js'
+import { identical, notIdentical, result, noResult, swapped, notSwapped, valueChangeOriginal, valueChangeChanged } from '../redux/actions.js'
 
 function mapStateToProps (state) {
   return {
-    identical: state.isIdentical.identical,
-    result: state.hasResult.result,
-    swapped: state.isSwapped.swapped,
-    diffArray: state.isDiffArray.diffArray
+    identical: state.isIdentical,
+    result: state.hasResult,
+    swapped: state.isSwapped,
+    original: state.original,
+    changed: state.changed
   }
 }
 
@@ -43,37 +44,32 @@ export class Home extends React.Component {
     this.handleRemoveWhiteSpaces = this.handleRemoveWhiteSpaces.bind(this)
     this.handleSwap = this.handleSwap.bind(this)
     this.state = {
-      // diffArray: [],
-      // keep both state and redux? other?
-      original: '',
-      changed: ''
+      diffArray: []
     }
   }
 
   handleCompare () {
-    // const original = this.state.original
-    // const changed = this.state.changed
-    // const diffArray = Diff.diffChars(original, changed)
-    if (this.state.original === this.state.changed) {
-      // how to dispatch multiple actions
+    const original = this.props.original
+    const changed = this.props.changed
+    const diffArray = Diff.diffChars(original, changed)
+    if (original === changed) {
       store.dispatch(identical())
       store.dispatch(noResult())
     } else {
       store.dispatch(notIdentical())
       store.dispatch(result())
-      store.dispatch(diffArray())
-      // this.state.diffArray undefined
-      console.log('diffArray', this.state.diffArray)
-      // this.setState({ diffArray: diffArray })
+      this.setState({ diffArray: diffArray })
     }
   }
 
-  handleChange (original, changed) {
-    this.setState({ original, changed })
+  handleChange () {
+    store.dispatch(valueChangeOriginal(this.props.original))
+    store.dispatch(valueChangeChanged(this.props.changed))
   }
 
   handleClear () {
-    this.setState({ original: '', changed: '' })
+    store.dispatch(valueChangeOriginal(''))
+    store.dispatch(valueChangeChanged(''))
     store.dispatch(notIdentical())
     store.dispatch(noResult())
   }
@@ -83,41 +79,37 @@ export class Home extends React.Component {
   }
 
   handleLowercase () {
-    this.setState({
-      original: this.state.original.toLocaleLowerCase(),
-      changed: this.state.changed.toLocaleLowerCase()
-    })
+    store.dispatch(valueChangeOriginal(this.props.original.toLocaleLowerCase()))
+    store.dispatch(valueChangeChanged(this.props.changed.toLocaleLowerCase()))
     store.dispatch(notIdentical())
   }
 
   handleBreaksToSpaces () {
-    this.setState({
-      original: replaceBreaks(this.state.original),
-      changed: replaceBreaks(this.state.changed)
-    })
+    store.dispatch(valueChangeOriginal(replaceBreaks(this.props.original)))
+    store.dispatch(valueChangeChanged(replaceBreaks(this.props.changed)))
     store.dispatch(notIdentical())
   }
 
   handleRemoveWhiteSpaces () {
-    this.setState({
-      original: removeWhiteSpaces(this.state.original),
-      changed: removeWhiteSpaces(this.state.changed)
-    })
+    store.dispatch(valueChangeOriginal(removeWhiteSpaces(this.props.original)))
+    store.dispatch(valueChangeChanged(removeWhiteSpaces(this.props.changed)))
     store.dispatch(notIdentical())
   }
 
+  // doesn't work as expected
   handleSwap () {
-    if (this.state.swapped === false) {
-      // hier is something happening
-      [this.state.original, this.state.changed] = [this.state.changed, this.state.original]
+    if (this.props.swapped === false) {
+      store.dispatch(valueChangeOriginal(this.props.changed))
+      store.dispatch(valueChangeChanged(this.props.original))
       this.handleCompare()
       store.dispatch(notIdentical())
       store.dispatch(swapped())
     } else {
-      [this.state.changed, this.state.original] = [this.state.original, this.state.changed]
+      store.dispatch(valueChangeOriginal(this.props.original))
+      store.dispatch(valueChangeChanged(this.props.changed))
+      this.handleCompare()
       store.dispatch(notSwapped())
       store.dispatch(notIdentical())
-      this.handleCompare()
     }
   }
 
@@ -139,12 +131,10 @@ export class Home extends React.Component {
               : (
                 <div>
                   <Toolbar
-                  /* diffArray is still in props? this.state.diffArray */
-                  /* what does store.dispatch(diffArray() return */
-                    diffArray={store.dispatch(diffArray())} onMenuClick={this.handleMenuClick} onLowercase={this.handleLowercase}
+                    diffArray={this.state.diffArray} onMenuClick={this.handleMenuClick} onLowercase={this.handleLowercase}
                     onBreaksToSpaces={this.handleBreaksToSpaces} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces}
                   />
-                  <Output diffArray={() => store.dispatch(diffArray())} />
+                  <Output diffArray={this.state.diffArray} />
                   <div className={styles.outputButtons}>
                     <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
                     <Tooltip title='Swap'>

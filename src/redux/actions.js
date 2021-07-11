@@ -5,33 +5,44 @@ import {
   NO_RESULT,
   SWAPPED,
   NOT_SWAPPED,
-  DIFF_ARRAY
+  VALUE_ORIGINAL,
+  VALUE_CHANGED
 } from './constants.js'
 
-export const identical = () => {
+export function identical () {
   return { type: IS_IDENTICAL }
 }
 
-export const notIdentical = () => {
+export function notIdentical () {
   return { type: IS_NOT_IDENTICAL }
 }
 
-export const result = () => {
+export function result () {
   return { type: RESULT }
 }
 
-export const noResult = () => {
+export function noResult () {
   return { type: NO_RESULT }
 }
 
-export const swapped = () => {
+export function swapped () {
   return { type: SWAPPED }
 }
 
-export const notSwapped = () => {
+export function notSwapped () {
   return { type: NOT_SWAPPED }
 }
 
-export const diffArray = () => {
-  return { type: DIFF_ARRAY }
+export function valueChangeOriginal (value) {
+  return {
+    type: VALUE_ORIGINAL,
+    value
+  }
+}
+
+export function valueChangeChanged (value) {
+  return {
+    type: VALUE_CHANGED,
+    value
+  }
 }

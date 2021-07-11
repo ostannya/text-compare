@@ -3,14 +3,16 @@ import {
   identicalReducer,
   resultReducer,
   swapReducer,
-  diffArrayReducer
+  originalReducer,
+  changedReducer
 } from './reducers.js'
 
 const rootReducer = combineReducers({
   isIdentical: identicalReducer,
   hasResult: resultReducer,
   isSwapped: swapReducer,
-  isDiffArray: diffArrayReducer
+  original: originalReducer,
+  changed: changedReducer
 })
 
 const store = createStore(rootReducer)
