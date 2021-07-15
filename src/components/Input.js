@@ -25,12 +25,12 @@ export class Input extends React.Component {
     this.original = React.createRef()
   }
 
-  handleChangeOriginal () {
-    store.dispatch(valueChangeOriginal(this.original.current.value))
-  }
-
   handleChangeChanged () {
     store.dispatch(valueChangeChanged(this.changed.current.value))
+  }
+
+  handleChangeOriginal () {
+    store.dispatch(valueChangeOriginal(this.original.current.value))
   }
 
   render () {

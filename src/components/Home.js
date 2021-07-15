@@ -6,19 +6,28 @@ import Toolbar from './Toolbar'
 import logo from '../assets/logo.png'
 import GitHubButton from 'react-github-btn'
 import Output from './Output'
-import * as Diff from 'diff'
 import Input from './Input'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
-import { identical, notIdentical, result, noResult, swapped, notSwapped, valueChangeOriginal, valueChangeChanged } from '../redux/actions.js'
+import {
+  identical,
+  notIdentical,
+  result,
+  noResult,
+  valueChangeOriginal,
+  valueChangeChanged,
+  manageCompare,
+  manageSwap
+} from '../redux/actions.js'
 
 function mapStateToProps (state) {
   return {
     identical: state.isIdentical,
     result: state.hasResult,
-    swapped: state.isSwapped,
     original: state.original,
-    changed: state.changed
+    changed: state.changed,
+    diffArray: state.diffArray,
+    swap: state.swap
   }
 }
 
@@ -43,22 +52,16 @@ export class Home extends React.Component {
     this.handleBreaksToSpaces = this.handleBreaksToSpaces.bind(this)
     this.handleRemoveWhiteSpaces = this.handleRemoveWhiteSpaces.bind(this)
     this.handleSwap = this.handleSwap.bind(this)
-    this.state = {
-      diffArray: []
-    }
   }
 
-  handleCompare () {
-    const original = this.props.original
-    const changed = this.props.changed
-    const diffArray = Diff.diffChars(original, changed)
+  handleCompare (original, changed) {
     if (original === changed) {
       store.dispatch(identical())
       store.dispatch(noResult())
     } else {
+      store.dispatch(manageCompare(original, changed))
       store.dispatch(notIdentical())
       store.dispatch(result())
-      this.setState({ diffArray: diffArray })
     }
   }
 
@@ -96,25 +99,13 @@ export class Home extends React.Component {
     store.dispatch(notIdentical())
   }
 
-  // doesn't work as expected
-  handleSwap () {
-    if (this.props.swapped === false) {
-      store.dispatch(valueChangeOriginal(this.props.changed))
-      store.dispatch(valueChangeChanged(this.props.original))
-      this.handleCompare()
-      store.dispatch(notIdentical())
-      store.dispatch(swapped())
-    } else {
-      store.dispatch(valueChangeOriginal(this.props.original))
-      store.dispatch(valueChangeChanged(this.props.changed))
-      this.handleCompare()
-      store.dispatch(notSwapped())
-      store.dispatch(notIdentical())
-    }
+  handleSwap (original, changed) {
+    store.dispatch(manageSwap(original, changed))
+    this.handleCompare(changed, original)
   }
 
   render () {
-    const { identical, result } = this.props
+    const { identical, result, original, changed } = this.props
     return (
       <div className={styles.container}>
         <div className={styles.main}>
@@ -131,23 +122,23 @@ export class Home extends React.Component {
               : (
                 <div>
                   <Toolbar
-                    diffArray={this.state.diffArray} onMenuClick={this.handleMenuClick} onLowercase={this.handleLowercase}
+                    diffArray={this.props.diffArray} onMenuClick={this.handleMenuClick} onLowercase={this.handleLowercase}
                     onBreaksToSpaces={this.handleBreaksToSpaces} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces}
                   />
-                  <Output diffArray={this.state.diffArray} />
+                  <Output diffArray={this.props.diffArray} />
                   <div className={styles.outputButtons}>
                     <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
                     <Tooltip title='Swap'>
-                      <SwapOutlined className={styles.swapButton} onClick={this.handleSwap} />
+                      <SwapOutlined className={styles.swapButton} onClick={() => this.handleSwap(original, changed)} />
                     </Tooltip>
                   </div>
                 </div>)
           }
           <Input
             onChange={this.handleChange}
-            original={this.state.original} changed={this.state.changed}
+            original={this.props.original} changed={this.props.changed}
           />
-          <Button type='primary' className={styles.compareButton} onClick={this.handleCompare}>Compare</Button>
+          <Button type='primary' className={styles.compareButton} onClick={() => this.handleCompare(original, changed)}>Compare</Button>
           <div className={styles.push} />
         </div>
         <div className={styles.footer}>

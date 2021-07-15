@@ -2,17 +2,17 @@ import { createStore, combineReducers } from 'redux'
 import {
   identicalReducer,
   resultReducer,
-  swapReducer,
   originalReducer,
-  changedReducer
+  changedReducer,
+  diffArrayReducer
 } from './reducers.js'
 
 const rootReducer = combineReducers({
   isIdentical: identicalReducer,
   hasResult: resultReducer,
-  isSwapped: swapReducer,
   original: originalReducer,
-  changed: changedReducer
+  changed: changedReducer,
+  diffArray: diffArrayReducer
 })
 
 const store = createStore(rootReducer)

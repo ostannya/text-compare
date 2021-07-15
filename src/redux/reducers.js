@@ -3,10 +3,9 @@ import {
   IS_NOT_IDENTICAL,
   RESULT,
   NO_RESULT,
-  SWAPPED,
-  NOT_SWAPPED,
   VALUE_ORIGINAL,
-  VALUE_CHANGED
+  VALUE_CHANGED,
+  DIFF_ARRAY
 } from './constants.js'
 
 const INITIAL_STATE_IDENTICAL = false
@@ -33,18 +32,6 @@ export function resultReducer (state = INITIAL_STATE_RESULT, action) {
   }
 }
 
-const INITIAL_STATE_SWAPPED = false
-export function swapReducer (state = INITIAL_STATE_SWAPPED, action) {
-  switch (action.type) {
-    case SWAPPED:
-      return true
-    case NOT_SWAPPED:
-      return false
-    default:
-      return state
-  }
-}
-
 const INITIAL_STATE_ORIGINAL = ''
 export function originalReducer (state = INITIAL_STATE_ORIGINAL, action) {
   switch (action.type) {
@@ -61,6 +48,17 @@ export function changedReducer (state = INITIAL_STATE_CHANGED, action) {
   switch (action.type) {
     case VALUE_CHANGED: {
       return action.value
+    }
+    default:
+      return state
+  }
+}
+
+const INITIAL_STATE_DIFF_ARRAY = []
+export function diffArrayReducer (state = INITIAL_STATE_DIFF_ARRAY, action) {
+  switch (action.type) {
+    case DIFF_ARRAY: {
+      return action.diffArray
     }
     default:
       return state
