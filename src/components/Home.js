@@ -26,8 +26,7 @@ function mapStateToProps (state) {
     result: state.hasResult,
     original: state.original,
     changed: state.changed,
-    diffArray: state.diffArray,
-    swap: state.swap
+    diffArray: state.diffArray
   }
 }
 
