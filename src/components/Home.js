@@ -10,34 +10,24 @@ import Input from './Input'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
 import {
-  identical,
   notIdentical,
-  result,
-  noResult,
-  valueChangeOriginal,
-  valueChangeChanged,
-  manageCompare,
-  manageSwap
+  compare,
+  swap,
+  clear,
+  change,
+  lowercase,
+  breaksToSpaces,
+  removeWhiteSpaces
 } from '../redux/actions.js'
 
 function mapStateToProps (state) {
   return {
-    identical: state.isIdentical,
-    result: state.hasResult,
+    identical: state.identical,
+    result: state.result,
     original: state.original,
     changed: state.changed,
     diffArray: state.diffArray
   }
-}
-
-function removeWhiteSpaces (text) {
-  const result = text.replace(/\s{2,}/g, ' ').trim()
-  return result
-}
-
-function replaceBreaks (text) {
-  const result = text.replace(/\n/g, ' ')
-  return result
 }
 
 export class Home extends React.Component {
@@ -53,27 +43,16 @@ export class Home extends React.Component {
     this.handleSwap = this.handleSwap.bind(this)
   }
 
-  handleCompare (original, changed) {
-    if (original === changed) {
-      store.dispatch(identical())
-      store.dispatch(noResult())
-    } else {
-      store.dispatch(manageCompare(original, changed))
-      store.dispatch(notIdentical())
-      store.dispatch(result())
-    }
+  handleCompare () {
+    store.dispatch(compare(this.props.original, this.props.changed))
   }
 
   handleChange () {
-    store.dispatch(valueChangeOriginal(this.props.original))
-    store.dispatch(valueChangeChanged(this.props.changed))
+    store.dispatch(change(this.props.original, this.props.changed))
   }
 
   handleClear () {
-    store.dispatch(valueChangeOriginal(''))
-    store.dispatch(valueChangeChanged(''))
-    store.dispatch(notIdentical())
-    store.dispatch(noResult())
+    store.dispatch(clear())
   }
 
   handleMenuClick () {
@@ -81,25 +60,19 @@ export class Home extends React.Component {
   }
 
   handleLowercase () {
-    store.dispatch(valueChangeOriginal(this.props.original.toLocaleLowerCase()))
-    store.dispatch(valueChangeChanged(this.props.changed.toLocaleLowerCase()))
-    store.dispatch(notIdentical())
+    store.dispatch(lowercase(this.props.original, this.props.changed))
   }
 
   handleBreaksToSpaces () {
-    store.dispatch(valueChangeOriginal(replaceBreaks(this.props.original)))
-    store.dispatch(valueChangeChanged(replaceBreaks(this.props.changed)))
-    store.dispatch(notIdentical())
+    store.dispatch(breaksToSpaces(this.props.original, this.props.changed))
   }
 
   handleRemoveWhiteSpaces () {
-    store.dispatch(valueChangeOriginal(removeWhiteSpaces(this.props.original)))
-    store.dispatch(valueChangeChanged(removeWhiteSpaces(this.props.changed)))
-    store.dispatch(notIdentical())
+    store.dispatch(removeWhiteSpaces(this.props.original, this.props.changed))
   }
 
   handleSwap (original, changed) {
-    store.dispatch(manageSwap(original, changed))
+    store.dispatch(swap(original, changed))
     this.handleCompare(changed, original)
   }
 
