@@ -14,7 +14,7 @@ import {
   compare,
   swap,
   clear,
-  change,
+  valueChange,
   lowercase,
   breaksToSpaces,
   removeWhiteSpaces
@@ -34,13 +34,11 @@ export class Home extends React.Component {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
-    this.handleCompare = this.handleCompare.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.handleMenuClick = this.handleMenuClick.bind(this)
     this.handleLowercase = this.handleLowercase.bind(this)
     this.handleBreaksToSpaces = this.handleBreaksToSpaces.bind(this)
     this.handleRemoveWhiteSpaces = this.handleRemoveWhiteSpaces.bind(this)
-    this.handleSwap = this.handleSwap.bind(this)
   }
 
   handleCompare () {
@@ -48,7 +46,7 @@ export class Home extends React.Component {
   }
 
   handleChange () {
-    store.dispatch(change(this.props.original, this.props.changed))
+    store.dispatch(valueChange(this.props.original, this.props.changed))
   }
 
   handleClear () {

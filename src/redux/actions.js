@@ -4,19 +4,15 @@ import {
   RESULT,
   NO_RESULT,
   COMPARE,
-  VALUE_ORIGINAL,
-  VALUE_CHANGED,
-  // VALUE_CHANGE,
+  VALUE_CHANGE,
   DIFF_ARRAY,
   SWAP,
   CLEAR,
-  CHANGE,
   LOWERCASE,
   BREAKS_TO_SPACES,
   REMOVE_WHITESPACES
 } from './constants.js'
 import * as Diff from 'diff'
-import store from '../redux/store.js'
 
 function identical () {
   return { type: IS_IDENTICAL }
@@ -34,27 +30,13 @@ function noResult () {
   return { type: NO_RESULT }
 }
 
-export function valueChangeOriginal (value) {
+export function valueChange (original, changed) {
   return {
-    type: VALUE_ORIGINAL,
-    value
+    type: VALUE_CHANGE,
+    original,
+    changed
   }
 }
-
-export function valueChangeChanged (value) {
-  return {
-    type: VALUE_CHANGED,
-    value
-  }
-}
-
-// export function valueChange (original, changed) {
-//   return {
-//     type: VALUE_CHANGE,
-//     original,
-//     changed
-//   }
-// }
 
 function diffCompare (original, changed) {
   const diffArray = Diff.diffChars(original, changed)
@@ -78,37 +60,28 @@ export function compare (original, changed) {
     }
   }
 }
-
-export function swap (original, changed) {
-  store.dispatch(valueChangeOriginal(changed))
-  store.dispatch(valueChangeChanged(original))
-  return {
-    type: SWAP
+// doesn't work as expected
+export function swap () {
+  return (dispatch, getState) => {
+    const { original, changed } = getState()
+    dispatch(valueChange(changed, original))
+    dispatch({ type: SWAP })
   }
 }
 
 export function clear () {
   return (dispatch) => {
-    dispatch(valueChangeOriginal(''))
-    dispatch(valueChangeChanged(''))
+    dispatch(valueChange('', ''))
     dispatch(notIdentical())
     dispatch(noResult())
     dispatch({ type: CLEAR })
   }
 }
 
-export function change (original, changed) {
-  return (dispatch) => {
-    dispatch(valueChangeOriginal(original))
-    dispatch(valueChangeChanged(changed))
-    dispatch({ type: CHANGE })
-  }
-}
-
-export function lowercase (original, changed) {
-  return (dispatch) => {
-    dispatch(valueChangeOriginal(original.toLocaleLowerCase()))
-    dispatch(valueChangeChanged(changed.toLocaleLowerCase()))
+export function lowercase () {
+  return (dispatch, getState) => {
+    const { original, changed } = getState()
+    dispatch(valueChange(original.toLocaleLowerCase(), changed.toLocaleLowerCase()))
     dispatch(notIdentical())
     dispatch({ type: LOWERCASE })
   }
@@ -119,10 +92,10 @@ function replaceBreaks (text) {
   return result
 }
 
-export function breaksToSpaces (original, changed) {
-  return (dispatch) => {
-    dispatch(valueChangeOriginal(replaceBreaks(original)))
-    dispatch(valueChangeChanged(replaceBreaks(changed)))
+export function breaksToSpaces () {
+  return (dispatch, getState) => {
+    const { original, changed } = getState()
+    dispatch(valueChange(replaceBreaks(original), replaceBreaks(changed)))
     dispatch(notIdentical())
     dispatch({ type: BREAKS_TO_SPACES })
   }
@@ -133,10 +106,10 @@ function removeSpaces (text) {
   return result
 }
 
-export function removeWhiteSpaces (original, changed) {
-  return (dispatch) => {
-    dispatch(valueChangeOriginal(removeSpaces(original)))
-    dispatch(valueChangeChanged(removeSpaces(changed)))
+export function removeWhiteSpaces () {
+  return (dispatch, getState) => {
+    const { original, changed } = getState()
+    dispatch(valueChange(removeSpaces(original), removeSpaces(changed)))
     dispatch(notIdentical())
     dispatch({ type: REMOVE_WHITESPACES })
   }
