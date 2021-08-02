@@ -69,9 +69,8 @@ export class Home extends React.Component {
     store.dispatch(removeWhiteSpaces(this.props.original, this.props.changed))
   }
 
-  handleSwap (original, changed) {
-    store.dispatch(swap(original, changed))
-    this.handleCompare(changed, original)
+  handleSwap () {
+    store.dispatch(swap(this.props.changed, this.props.original))
   }
 
   render () {

@@ -60,11 +60,12 @@ export function compare (original, changed) {
     }
   }
 }
-// doesn't work as expected
+
 export function swap () {
   return (dispatch, getState) => {
     const { original, changed } = getState()
     dispatch(valueChange(changed, original))
+    dispatch(compare(changed, original))
     dispatch({ type: SWAP })
   }
 }
