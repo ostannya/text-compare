@@ -14,7 +14,6 @@ import {
   compare,
   swap,
   clear,
-  valueChange,
   lowercase,
   breaksToSpaces,
   removeWhiteSpaces
@@ -30,10 +29,9 @@ function mapStateToProps (state) {
   }
 }
 
-export class Home extends React.Component {
+class Home extends React.Component {
   constructor (props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.handleMenuClick = this.handleMenuClick.bind(this)
     this.handleLowercase = this.handleLowercase.bind(this)
@@ -43,10 +41,6 @@ export class Home extends React.Component {
 
   handleCompare () {
     store.dispatch(compare(this.props.original, this.props.changed))
-  }
-
-  handleChange () {
-    store.dispatch(valueChange(this.props.original, this.props.changed))
   }
 
   handleClear () {
@@ -104,7 +98,6 @@ export class Home extends React.Component {
                 </div>)
           }
           <Input
-            onChange={this.handleChange}
             original={this.props.original} changed={this.props.changed}
           />
           <Button type='primary' className={styles.compareButton} onClick={() => this.handleCompare(original, changed)}>Compare</Button>
