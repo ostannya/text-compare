@@ -37,7 +37,13 @@ function ColoredRemovedOrAdded ({ line, index, color, removedOrAdded, numbered }
         if (nextObject && nextObject[removedOrAdded] && nextObject.value === '\n') {
           return <span style={{ backgroundColor: color }} key={index}>{object.value}</span>
         } else {
-          return <span style={{ backgroundColor: object[removedOrAdded] ? color : 'transparent' }} key={index}>{object.value}</span>
+          return (
+            <span
+              style={{ backgroundColor: object[removedOrAdded] ? color : 'transparent' }}
+              key={index}
+            >{object.value}
+            </span>
+          )
         }
       })}
     </div>
@@ -47,9 +53,15 @@ function ColoredRemovedOrAdded ({ line, index, color, removedOrAdded, numbered }
 export class Output extends React.Component {
   render () {
     const partsRemoved = lineBreakedDiff(this.props.diffArray.filter(object => !(object.added === true)))
-      .map((line, index) => <ColoredRemovedOrAdded key={index} line={line} color='#ffc4c1' numbered={styles.numberedOriginal} removedOrAdded='removed' />)
+      .map((line, index) => <ColoredRemovedOrAdded
+        key={index} line={line} color='#ffc4c1' numbered={styles.numberedOriginal}
+        removedOrAdded='removed'
+                            />)
     const partsAdded = lineBreakedDiff(this.props.diffArray.filter(object => !(object.removed === true)))
-      .map((line, index) => <ColoredRemovedOrAdded key={index} line={line} color='#b5efdb' numbered={styles.numberedChanged} removedOrAdded='added' />)
+      .map((line, index) => <ColoredRemovedOrAdded
+        key={index} line={line} color='#b5efdb' numbered={styles.numberedChanged}
+        removedOrAdded='added'
+                            />)
     return (
       <div className={styles.outputs}>
         <div spellCheck='false' className={`${styles.output} ${styles.outputOriginal}`}>{partsRemoved}</div>

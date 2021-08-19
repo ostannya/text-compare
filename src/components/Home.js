@@ -100,7 +100,11 @@ class Home extends React.Component {
           <Input
             original={this.props.original} changed={this.props.changed}
           />
-          <Button type='primary' className={styles.compareButton} onClick={() => this.handleCompare(original, changed)}>Compare</Button>
+          <Button
+            type='primary' className={styles.compareButton}
+            onClick={() => this.handleCompare(original, changed)}
+          >Compare
+          </Button>
           <div className={styles.push} />
         </div>
         <div className={styles.footer}>

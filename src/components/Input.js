@@ -47,8 +47,9 @@ class Input extends React.Component {
                 <div className={styles.scroll}>
                   <div className={styles.linesContainer}>{originalBreakedByLine}</div>
                   <textarea
-                    spellCheck='false' className={styles.inputText} onChange={(originalEvent) => this.handleOriganalChange(originalEvent)}
-                    value={original}
+                    spellCheck='false' className={styles.inputText}
+                    onChange={(originalEvent) => this.handleOriganalChange(originalEvent)}
+                    // value={original}
                   />
                 </div>
               </div>
@@ -59,8 +60,9 @@ class Input extends React.Component {
                 <div className={styles.scroll}>
                   <div className={styles.linesContainer}>{changedBreakedByLine}</div>
                   <textarea
-                    spellCheck='false' className={styles.inputText} onChange={(changedEvent) => this.handleChangedChange(changedEvent)}
-                    value={changed}
+                    spellCheck='false' className={styles.inputText}
+                    onChange={(changedEvent) => this.handleChangedChange(changedEvent)}
+                    // value={changed}
                   />
                 </div>
               </div>
