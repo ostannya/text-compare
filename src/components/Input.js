@@ -4,13 +4,6 @@ import { valueChange } from '../redux/actions.js'
 import store from '../redux/store.js'
 import { connect } from 'react-redux'
 
-function mapStateToProps (state) {
-  return {
-    original: state.original,
-    changed: state.changed
-  }
-}
-
 function BreakedByLine ({ numbered, index, inputLine }) {
   return (
     <div className={numbered} key={index}>{inputLine}</div>)
@@ -49,7 +42,7 @@ class Input extends React.Component {
                   <textarea
                     spellCheck='false' className={styles.inputText}
                     onChange={(originalEvent) => this.handleOriganalChange(originalEvent)}
-                    // value={original}
+                    value={original}
                   />
                 </div>
               </div>
@@ -62,7 +55,7 @@ class Input extends React.Component {
                   <textarea
                     spellCheck='false' className={styles.inputText}
                     onChange={(changedEvent) => this.handleChangedChange(changedEvent)}
-                    // value={changed}
+                    value={changed}
                   />
                 </div>
               </div>
@@ -74,4 +67,9 @@ class Input extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Input)
+export default connect(state => {
+  return {
+    original: state.original,
+    changed: state.changed
+  }
+})(Input)

@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from '../Output.module.css'
+import { connect } from 'react-redux'
 
-const lineBreakedDiff = (partsDiff) => {
+export const lineBreakedDiff = (partsDiff) => {
   const lines = []
   let line = []
   for (let i = 0; i < partsDiff.length; i++) {
@@ -70,4 +71,9 @@ export class Output extends React.Component {
     )
   }
 }
-export default Output
+
+export default connect(state => {
+  return {
+    diffArray: state.diffArray
+  }
+})(Output)

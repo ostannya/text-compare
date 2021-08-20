@@ -10,33 +10,16 @@ import Input from './Input'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
 import {
-  notIdentical,
   compare,
   swap,
-  clear,
-  lowercase,
-  breaksToSpaces,
-  removeWhiteSpaces
+  clear
 } from '../redux/actions.js'
-
-function mapStateToProps (state) {
-  return {
-    identical: state.identical,
-    result: state.result,
-    original: state.original,
-    changed: state.changed,
-    diffArray: state.diffArray
-  }
-}
 
 class Home extends React.Component {
   constructor (props) {
     super(props)
+    this.handleCompare = this.handleCompare.bind(this)
     this.handleClear = this.handleClear.bind(this)
-    this.handleMenuClick = this.handleMenuClick.bind(this)
-    this.handleLowercase = this.handleLowercase.bind(this)
-    this.handleBreaksToSpaces = this.handleBreaksToSpaces.bind(this)
-    this.handleRemoveWhiteSpaces = this.handleRemoveWhiteSpaces.bind(this)
   }
 
   handleCompare () {
@@ -45,22 +28,6 @@ class Home extends React.Component {
 
   handleClear () {
     store.dispatch(clear())
-  }
-
-  handleMenuClick () {
-    store.dispatch(notIdentical())
-  }
-
-  handleLowercase () {
-    store.dispatch(lowercase(this.props.original, this.props.changed))
-  }
-
-  handleBreaksToSpaces () {
-    store.dispatch(breaksToSpaces(this.props.original, this.props.changed))
-  }
-
-  handleRemoveWhiteSpaces () {
-    store.dispatch(removeWhiteSpaces(this.props.original, this.props.changed))
   }
 
   handleSwap () {
@@ -84,11 +51,8 @@ class Home extends React.Component {
               ? null
               : (
                 <div>
-                  <Toolbar
-                    diffArray={this.props.diffArray} onMenuClick={this.handleMenuClick} onLowercase={this.handleLowercase}
-                    onBreaksToSpaces={this.handleBreaksToSpaces} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces}
-                  />
-                  <Output diffArray={this.props.diffArray} />
+                  <Toolbar />
+                  <Output />
                   <div className={styles.outputButtons}>
                     <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
                     <Tooltip title='Swap'>
@@ -97,9 +61,7 @@ class Home extends React.Component {
                   </div>
                 </div>)
           }
-          <Input
-            original={this.props.original} changed={this.props.changed}
-          />
+          <Input />
           <Button
             type='primary' className={styles.compareButton}
             onClick={() => this.handleCompare(original, changed)}
@@ -126,4 +88,12 @@ class Home extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Home)
+export default connect(state => {
+  return {
+    identical: state.identical,
+    result: state.result,
+    original: state.original,
+    changed: state.changed,
+    diffArray: state.diffArray
+  }
+})(Home)
