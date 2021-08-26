@@ -10,12 +10,6 @@ function BreakedByLine ({ numbered, index, inputLine }) {
 }
 
 class Input extends React.Component {
-  constructor (props) {
-    super(props)
-    this.handleOriganalChange = this.handleOriganalChange.bind(this)
-    this.handleChangedChange = this.handleChangedChange.bind(this)
-  }
-
   handleOriganalChange (e) {
     store.dispatch(valueChange(e.target.value, this.props.changed))
   }

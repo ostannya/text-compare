@@ -18,7 +18,6 @@ import {
 class Home extends React.Component {
   constructor (props) {
     super(props)
-    this.handleCompare = this.handleCompare.bind(this)
     this.handleClear = this.handleClear.bind(this)
   }
 

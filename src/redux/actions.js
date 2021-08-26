@@ -1,11 +1,10 @@
 import {
-  IS_IDENTICAL,
-  IS_NOT_IDENTICAL,
+  NOT_IDENTICAL,
   RESULT,
   NO_RESULT,
   COMPARE,
   VALUE_CHANGE,
-  DIFF_ARRAY,
+  DIFF_COMPARE,
   SWAP,
   CLEAR,
   LOWERCASE,
@@ -14,12 +13,9 @@ import {
 } from './constants.js'
 import * as Diff from 'diff'
 
-function identical () {
-  return { type: IS_IDENTICAL }
-}
-
-export function notIdentical () {
-  return { type: IS_NOT_IDENTICAL }
+// after clear I have to explicitly set identical to false
+function notIdentical () {
+  return { type: NOT_IDENTICAL }
 }
 
 function result () {
@@ -41,20 +37,15 @@ export function valueChange (original, changed) {
 function diffCompare (original, changed) {
   const diffArray = Diff.diffChars(original, changed)
   return {
-    type: DIFF_ARRAY,
+    type: DIFF_COMPARE,
     diffArray
   }
 }
 
 export function compare (original, changed) {
   return (dispatch) => {
-    if (original === changed) {
-      dispatch(identical())
-      dispatch(noResult())
-      dispatch({ type: COMPARE })
-    } else {
+    if (original !== changed) {
       dispatch(diffCompare(original, changed))
-      dispatch(notIdentical())
       dispatch(result())
       dispatch({ type: COMPARE })
     }
@@ -83,7 +74,6 @@ export function lowercase () {
   return (dispatch, getState) => {
     const { original, changed } = getState()
     dispatch(valueChange(original.toLocaleLowerCase(), changed.toLocaleLowerCase()))
-    dispatch(notIdentical())
     dispatch({ type: LOWERCASE })
   }
 }
@@ -97,7 +87,6 @@ export function breaksToSpaces () {
   return (dispatch, getState) => {
     const { original, changed } = getState()
     dispatch(valueChange(replaceBreaks(original), replaceBreaks(changed)))
-    dispatch(notIdentical())
     dispatch({ type: BREAKS_TO_SPACES })
   }
 }
@@ -111,7 +100,6 @@ export function removeWhiteSpaces () {
   return (dispatch, getState) => {
     const { original, changed } = getState()
     dispatch(valueChange(removeSpaces(original), removeSpaces(changed)))
-    dispatch(notIdentical())
     dispatch({ type: REMOVE_WHITESPACES })
   }
 }
