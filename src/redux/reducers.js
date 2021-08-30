@@ -1,28 +1,26 @@
 import {
-  NOT_IDENTICAL,
-  RESULT,
-  NO_RESULT,
   VALUE_CHANGE,
-  DIFF_COMPARE
+  CLEAR,
+  COMPARE
 } from './constants.js'
 
-export function identical (state = false, action) {
+export function markAsIdentical (state = false, action) {
   switch (action.type) {
     case VALUE_CHANGE:
       return action.original === action.changed
-    case NOT_IDENTICAL:
+    case CLEAR:
       return false
     default:
       return state
   }
 }
 
-export function result (state = false, action) {
+export function showResult (state = false, action) {
   switch (action.type) {
-    case RESULT:
-      return true
-    case NO_RESULT:
+    case CLEAR:
       return false
+    case COMPARE:
+      return true
     default:
       return state
   }
@@ -30,9 +28,10 @@ export function result (state = false, action) {
 
 export function original (state = '', action) {
   switch (action.type) {
-    case VALUE_CHANGE: {
+    case VALUE_CHANGE:
       return action.original
-    }
+    case CLEAR:
+      return ''
     default:
       return state
   }
@@ -40,9 +39,10 @@ export function original (state = '', action) {
 
 export function changed (state = '', action) {
   switch (action.type) {
-    case VALUE_CHANGE: {
+    case VALUE_CHANGE:
       return action.changed
-    }
+    case CLEAR:
+      return ''
     default:
       return state
   }
@@ -50,9 +50,8 @@ export function changed (state = '', action) {
 
 export function diffArray (state = [], action) {
   switch (action.type) {
-    case DIFF_COMPARE: {
+    case COMPARE:
       return action.diffArray
-    }
     default:
       return state
   }

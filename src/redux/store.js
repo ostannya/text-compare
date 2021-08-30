@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import {
-  identical,
-  result,
+  markAsIdentical,
+  showResult,
   original,
   changed,
   diffArray
@@ -9,8 +9,8 @@ import {
 import thunk from 'redux-thunk'
 
 const rootReducer = combineReducers({
-  identical,
-  result,
+  markAsIdentical,
+  showResult,
   original,
   changed,
   diffArray

@@ -34,7 +34,7 @@ class Home extends React.Component {
   }
 
   render () {
-    const { identical, result, original, changed } = this.props
+    const { markAsIdentical, showResult, original, changed } = this.props
     return (
       <div className={styles.container}>
         <div className={styles.main}>
@@ -42,11 +42,11 @@ class Home extends React.Component {
             <img className={styles.logo} src={logo} alt='logo' />
             <div className={styles.headerText}>2Text Compare</div>
           </div>
-          {identical
+          {markAsIdentical
             ? <div>The two texts are identical!</div>
             : null}
           {
-            !result
+            !showResult
               ? null
               : (
                 <div>
@@ -89,8 +89,8 @@ class Home extends React.Component {
 
 export default connect(state => {
   return {
-    identical: state.identical,
-    result: state.result,
+    markAsIdentical: state.markAsIdentical,
+    showResult: state.showResult,
     original: state.original,
     changed: state.changed,
     diffArray: state.diffArray

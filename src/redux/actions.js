@@ -1,10 +1,6 @@
 import {
-  NOT_IDENTICAL,
-  RESULT,
-  NO_RESULT,
   COMPARE,
   VALUE_CHANGE,
-  DIFF_COMPARE,
   SWAP,
   CLEAR,
   LOWERCASE,
@@ -12,19 +8,6 @@ import {
   REMOVE_WHITESPACES
 } from './constants.js'
 import * as Diff from 'diff'
-
-// after clear I have to explicitly set identical to false
-function notIdentical () {
-  return { type: NOT_IDENTICAL }
-}
-
-function result () {
-  return { type: RESULT }
-}
-
-function noResult () {
-  return { type: NO_RESULT }
-}
 
 export function valueChange (original, changed) {
   return {
@@ -34,20 +17,11 @@ export function valueChange (original, changed) {
   }
 }
 
-function diffCompare (original, changed) {
-  const diffArray = Diff.diffChars(original, changed)
-  return {
-    type: DIFF_COMPARE,
-    diffArray
-  }
-}
-
 export function compare (original, changed) {
+  const diffArray = Diff.diffChars(original, changed)
   return (dispatch) => {
     if (original !== changed) {
-      dispatch(diffCompare(original, changed))
-      dispatch(result())
-      dispatch({ type: COMPARE })
+      dispatch({ type: COMPARE, diffArray })
     }
   }
 }
@@ -63,9 +37,6 @@ export function swap () {
 
 export function clear () {
   return (dispatch) => {
-    dispatch(valueChange('', ''))
-    dispatch(notIdentical())
-    dispatch(noResult())
     dispatch({ type: CLEAR })
   }
 }
@@ -74,6 +45,7 @@ export function lowercase () {
   return (dispatch, getState) => {
     const { original, changed } = getState()
     dispatch(valueChange(original.toLocaleLowerCase(), changed.toLocaleLowerCase()))
+    dispatch(compare(original.toLocaleLowerCase(), changed.toLocaleLowerCase()))
     dispatch({ type: LOWERCASE })
   }
 }
@@ -87,6 +59,7 @@ export function breaksToSpaces () {
   return (dispatch, getState) => {
     const { original, changed } = getState()
     dispatch(valueChange(replaceBreaks(original), replaceBreaks(changed)))
+    dispatch(compare(replaceBreaks(original), replaceBreaks(changed)))
     dispatch({ type: BREAKS_TO_SPACES })
   }
 }
@@ -100,6 +73,7 @@ export function removeWhiteSpaces () {
   return (dispatch, getState) => {
     const { original, changed } = getState()
     dispatch(valueChange(removeSpaces(original), removeSpaces(changed)))
+    dispatch(compare(removeSpaces(original), removeSpaces(changed)))
     dispatch({ type: REMOVE_WHITESPACES })
   }
 }
