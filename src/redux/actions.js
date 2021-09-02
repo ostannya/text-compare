@@ -17,9 +17,10 @@ export function valueChange (original, changed) {
   }
 }
 
-export function compare (original, changed) {
-  const diffArray = Diff.diffChars(original, changed)
-  return (dispatch) => {
+export function compare () {
+  return (dispatch, getState) => {
+    const { original, changed } = getState()
+    const diffArray = Diff.diffChars(original, changed)
     if (original !== changed) {
       dispatch({ type: COMPARE, diffArray })
     }

@@ -18,15 +18,15 @@ export class Toolbar extends React.Component {
   }
 
   handleLowercase () {
-    store.dispatch(lowercase(this.props.original, this.props.changed))
+    store.dispatch(lowercase())
   }
 
   handleBreaksToSpaces () {
-    store.dispatch(breaksToSpaces(this.props.original, this.props.changed))
+    store.dispatch(breaksToSpaces())
   }
 
   handleRemoveWhiteSpaces () {
-    store.dispatch(removeWhiteSpaces(this.props.original, this.props.changed))
+    store.dispatch(removeWhiteSpaces())
   }
 
   render () {
