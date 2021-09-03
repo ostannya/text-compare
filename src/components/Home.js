@@ -6,101 +6,35 @@ import Toolbar from './Toolbar'
 import logo from '../assets/logo.png'
 import GitHubButton from 'react-github-btn'
 import Output from './Output'
-import * as Diff from 'diff'
 import Input from './Input'
+import { connect } from 'react-redux'
+import store from '../redux/store.js'
+import {
+  compare,
+  swap,
+  clear
+} from '../redux/actions.js'
 
-function removeWhiteSpaces (text) {
-  const result = text.replace(/\s{2,}/g, ' ').trim()
-  return result
-}
-
-function replaceBreaks (text) {
-  const result = text.replace(/\n/g, ' ')
-  return result
-}
-
-export class Home extends React.Component {
+class Home extends React.Component {
   constructor (props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleCompare = this.handleCompare.bind(this)
     this.handleClear = this.handleClear.bind(this)
-    this.handleMenuClick = this.handleMenuClick.bind(this)
-    this.handleLowercase = this.handleLowercase.bind(this)
-    this.handleBreaksToSpaces = this.handleBreaksToSpaces.bind(this)
-    this.handleRemoveWhiteSpaces = this.handleRemoveWhiteSpaces.bind(this)
-    this.handleSwap = this.handleSwap.bind(this)
-    this.state = {
-      diffArray: [],
-      result: false,
-      identical: false,
-      swapped: false,
-      original: '',
-      changed: ''
-    }
   }
 
   handleCompare () {
-    const original = this.state.original
-    const changed = this.state.changed
-    const diffArray = Diff.diffChars(original, changed)
-    if (original === changed) {
-      this.setState({ identical: true, result: false })
-    } else {
-      this.setState({ diffArray: diffArray, result: true, identical: false })
-    }
-  }
-
-  handleChange (original, changed) {
-    this.setState({ original, changed })
+    store.dispatch(compare(this.props.original, this.props.changed))
   }
 
   handleClear () {
-    this.setState({ result: false, identical: false, original: '', changed: '' })
-  }
-
-  handleMenuClick () {
-    this.setState({ identical: false })
-  }
-
-  handleLowercase () {
-    this.setState({
-      identical: false,
-      original: this.state.original.toLocaleLowerCase(),
-      changed: this.state.changed.toLocaleLowerCase()
-    })
-  }
-
-  handleBreaksToSpaces () {
-    this.setState({
-      identical: false,
-      original: replaceBreaks(this.state.original),
-      changed: replaceBreaks(this.state.changed)
-    })
-  }
-
-  handleRemoveWhiteSpaces () {
-    this.setState({
-      identical: false,
-      original: removeWhiteSpaces(this.state.original),
-      changed: removeWhiteSpaces(this.state.changed)
-    })
+    store.dispatch(clear())
   }
 
   handleSwap () {
-    if (this.state.swapped === false) {
-      [this.state.original, this.state.changed] = [this.state.changed, this.state.original]
-      this.handleCompare()
-      this.setState({ identical: false, swapped: true })
-    } else {
-      [this.state.changed, this.state.original] = [this.state.original, this.state.changed]
-      this.setState({ identical: false, swapped: false })
-      this.handleCompare()
-    }
+    store.dispatch(swap(this.props.changed, this.props.original))
   }
 
   render () {
-    const { result, identical } = this.state
+    const { markAsIdentical, showResult, original, changed } = this.props
     return (
       <div className={styles.container}>
         <div className={styles.main}>
@@ -108,32 +42,30 @@ export class Home extends React.Component {
             <img className={styles.logo} src={logo} alt='logo' />
             <div className={styles.headerText}>2Text Compare</div>
           </div>
-          {identical
+          {markAsIdentical
             ? <div>The two texts are identical!</div>
             : null}
           {
-            !result
+            !showResult
               ? null
               : (
                 <div>
-                  <Toolbar
-                    diffArray={this.state.diffArray} onMenuClick={this.handleMenuClick} onLowercase={this.handleLowercase}
-                    onBreaksToSpaces={this.handleBreaksToSpaces} onRemoveWhiteSpaces={this.handleRemoveWhiteSpaces}
-                  />
-                  <Output diffArray={this.state.diffArray} />
+                  <Toolbar />
+                  <Output />
                   <div className={styles.outputButtons}>
                     <Button className={styles.clearButton} onClick={this.handleClear}>Clear</Button>
                     <Tooltip title='Swap'>
-                      <SwapOutlined className={styles.swapButton} onClick={this.handleSwap} />
+                      <SwapOutlined className={styles.swapButton} onClick={() => this.handleSwap(original, changed)} />
                     </Tooltip>
                   </div>
                 </div>)
           }
-          <Input
-            onChange={this.handleChange}
-            original={this.state.original} changed={this.state.changed}
-          />
-          <Button type='primary' className={styles.compareButton} onClick={this.handleCompare}>Compare</Button>
+          <Input />
+          <Button
+            type='primary' className={styles.compareButton}
+            onClick={() => this.handleCompare(original, changed)}
+          >Compare
+          </Button>
           <div className={styles.push} />
         </div>
         <div className={styles.footer}>
@@ -155,4 +87,12 @@ export class Home extends React.Component {
   }
 }
 
-export default Home
+export default connect(state => {
+  return {
+    markAsIdentical: state.markAsIdentical,
+    showResult: state.showResult,
+    original: state.original,
+    changed: state.changed,
+    diffArray: state.diffArray
+  }
+})(Home)

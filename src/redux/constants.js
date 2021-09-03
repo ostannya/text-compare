@@ -1,0 +1,7 @@
+export const SWAP = 'SWAP'
+export const VALUE_CHANGE = 'VALUE_CHANGE'
+export const CLEAR = 'CLEAR'
+export const LOWERCASE = 'LOWERCASE'
+export const BREAKS_TO_SPACES = 'BREAKS_TO_SPACES'
+export const REMOVE_WHITESPACES = 'REMOVE_WHITESPACES'
+export const COMPARE = 'COMPARE'

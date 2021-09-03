@@ -1,22 +1,21 @@
 import React from 'react'
 import styles from '../Input.module.css'
+import { valueChange } from '../redux/actions.js'
+import store from '../redux/store.js'
+import { connect } from 'react-redux'
 
 function BreakedByLine ({ numbered, index, inputLine }) {
   return (
     <div className={numbered} key={index}>{inputLine}</div>)
 }
 
-export class Input extends React.Component {
-  constructor (props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-    this.changed = React.createRef()
-    this.original = React.createRef()
+class Input extends React.Component {
+  handleOriganalChange (e) {
+    store.dispatch(valueChange(e.target.value, this.props.changed))
   }
 
-  handleChange () {
-    this.setState({ original: this.original.current.value, changed: this.changed.current.value })
-    this.props.onChange(this.original.current.value, this.changed.current.value)
+  handleChangedChange (e) {
+    store.dispatch(valueChange(this.props.original, e.target.value))
   }
 
   render () {
@@ -35,8 +34,9 @@ export class Input extends React.Component {
                 <div className={styles.scroll}>
                   <div className={styles.linesContainer}>{originalBreakedByLine}</div>
                   <textarea
-                    spellCheck='false' className={styles.inputText} onChange={this.handleChange} ref={this.original}
-                    value={this.props.original}
+                    spellCheck='false' className={styles.inputText}
+                    onChange={(originalEvent) => this.handleOriganalChange(originalEvent)}
+                    value={original}
                   />
                 </div>
               </div>
@@ -47,8 +47,9 @@ export class Input extends React.Component {
                 <div className={styles.scroll}>
                   <div className={styles.linesContainer}>{changedBreakedByLine}</div>
                   <textarea
-                    spellCheck='false' className={styles.inputText} onChange={this.handleChange} ref={this.changed}
-                    value={this.props.changed}
+                    spellCheck='false' className={styles.inputText}
+                    onChange={(changedEvent) => this.handleChangedChange(changedEvent)}
+                    value={changed}
                   />
                 </div>
               </div>
@@ -60,4 +61,9 @@ export class Input extends React.Component {
   }
 }
 
-export default Input
+export default connect(state => {
+  return {
+    original: state.original,
+    changed: state.changed
+  }
+})(Input)
