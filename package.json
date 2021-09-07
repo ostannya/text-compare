@@ -6,9 +6,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
     "@jamesives/github-pages-deploy-action": "^4.1.1",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.7.2",
+    "@testing-library/jest-dom": "^5.14.1",
     "antd": "^4.12.3",
     "diff": "^5.0.0",
     "react": "^17.0.1",

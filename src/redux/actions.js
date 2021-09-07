@@ -51,7 +51,7 @@ export function lowercase () {
   }
 }
 
-function replaceBreaks (text) {
+export function replaceBreaks (text) {
   const result = text.replace(/\n/g, ' ')
   return result
 }
